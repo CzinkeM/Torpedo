@@ -1,0 +1,15 @@
+﻿<Window x:Class="Torpedo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Torpedo"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600
+        " Width="500" WindowStartupLocation="CenterScreen">
+    <StackPanel Background="Black">
+        <TextBlock Text="Its a text" Background="Wheat" Name="clickedPoint"></TextBlock>
+        <TextBlock Text="Coordinates" Background="Bisque" Name="textCordinates"></TextBlock>
+        <Canvas Width="400" Height="400" x:Name="gameCanvas" Background="White" MouseLeftButtonDown="GetPoint"/>
+    </StackPanel>
+</Window>
