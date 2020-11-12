@@ -18,12 +18,32 @@
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1.5*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Image Grid.Column="1" Grid.Row="1" Source="/battleship_logo.png"/>
         <TextBlock Grid.Column="1" Grid.Row="2" TextAlignment="Center" FontSize="20" >Menü</TextBlock>
-        <Button Grid.Column="1" Grid.Row="6" FontSize="20" Name="buttonStartGame" Click="StartGame">Start Game</Button>
+        <Button 
+            Grid.Column="1" 
+            Grid.Row="6"
+            FontSize="20"
+            Width="Auto"
+            Height="Auto"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            HorizontalContentAlignment="Center" 
+            VerticalContentAlignment="Center" 
+            x:Name="buttonStartGame"
+            Click="StartGame">
+            Start Game
+        </Button>
+        <ListBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" BorderBrush="White" >
+            <RadioButton Content="VS Ai" x:Name="radioAi"/>
+            <RadioButton Content="VS Player" x:Name="radioPlayer"/>
+        </ListBox>
+        <Label Grid.Column="1" Grid.Row="5" x:Name="labelError" HorizontalAlignment="Center"></Label>
+
     </Grid>
 </Window>
