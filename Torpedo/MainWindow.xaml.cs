@@ -121,7 +121,6 @@ namespace Torpedo
             if (actualShipType == SHIP_SMALL && SHIP_SMALL_count > 0)
             {
                 PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_SMALL, actualDirection);
-                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
                 DrawTheShips(tableLayout, SHIP_SMALL, SHIP_SMALL_count);
                 SHIP_SMALL_count--;
                 radioTypeSmall.Content = $"{SHIP_SMALL} ({SHIP_SMALL_count})";
@@ -129,7 +128,6 @@ namespace Torpedo
             else if (actualShipType == SHIP_DESTOYER && SHIP_DESTROYER_count > 0)
             {
                 PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_DESTORYER, actualDirection);
-                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
                 DrawTheShips(tableLayout, SHIP_DESTOYER, SHIP_DESTROYER_count);
                 SHIP_DESTROYER_count--;
                 radioTypeDestroyer.Content = $"{SHIP_DESTOYER} ({SHIP_DESTROYER_count})";
@@ -137,7 +135,6 @@ namespace Torpedo
             else if (actualShipType == SHIP_SUBMARINE && SHIP_SUBMARINE_count > 0)
             {
                 PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_SUBMARINE, actualDirection);
-                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
                 DrawTheShips(tableLayout, SHIP_SUBMARINE, SHIP_SUBMARINE_count);
                 SHIP_SUBMARINE_count--;
                 radioTypeSubmarine.Content = $"{SHIP_SUBMARINE}({SHIP_SUBMARINE_count})";
@@ -145,7 +142,6 @@ namespace Torpedo
             else if (actualShipType == SHIP_CARRIER && SHIP_CARRIER_count > 0)
             {
                 PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_CARRIER, actualDirection);
-                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
                 DrawTheShips(tableLayout, SHIP_CARRIER, SHIP_CARRIER_count);
                 SHIP_CARRIER_count--;
                 radioTypeCarrier.Content = $"{SHIP_CARRIER}({SHIP_CARRIER_count})";
@@ -153,7 +149,6 @@ namespace Torpedo
             else if (actualShipType == SHIP_BATTLESHIP && SHIP_BATTLESHIP_count > 0)
             {
                 PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_BATTLESHIP, actualDirection);
-                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
                 DrawTheShips(tableLayout, SHIP_BATTLESHIP, SHIP_BATTLESHIP_count);
                 SHIP_BATTLESHIP_count--;
                 radioTypeBattleShip.Content = $"{SHIP_BATTLESHIP} ({SHIP_BATTLESHIP_count})";
@@ -327,7 +322,7 @@ namespace Torpedo
 
         private void ShowErrorMessage(string ErrorMessage)
         {
-            textTest2.Text = ErrorMessage;
+            ErrorLabel.Content = ErrorMessage;
         }
 
         private void gameCanvas_KeyDown(object sender, KeyEventArgs e)
@@ -335,20 +330,23 @@ namespace Torpedo
             if(e.Key == Key.Up)
             {
                 actualDirection = DIR_UP;
+                imgOrientation.Source = new BitmapImage(new Uri("ori_up.png", UriKind.Relative));
             }
             if(e.Key == Key.Down)
             {
                 actualDirection = DIR_DOWN;
+                imgOrientation.Source = new BitmapImage(new Uri("ori_down.png", UriKind.Relative));
             }
             if (e.Key == Key.Left)
             {
                 actualDirection = DIR_LEFT;
+                imgOrientation.Source = new BitmapImage(new Uri("ori_left.png", UriKind.Relative));
             }
             if (e.Key == Key.Right)
             {
                 actualDirection = DIR_RIGHT;
+                imgOrientation.Source = new BitmapImage(new Uri("ori_right.png", UriKind.Relative));
             }
-            textTest2.Text = actualDirection;
         }
 
         private void ChooseActiveShipType()
@@ -380,6 +378,16 @@ namespace Torpedo
             gameCanvas.Children.Clear();
             InitializeShipsCount();
             InitializeRadioButtonContent();
+        }
+
+        private void ClickInfoButton(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickInfoButton(object sender, MouseButtonEventArgs e)
+        {
+
         }
         //Todo összes lerakott hajó törlése gomb
         //Todo Hajó számláló kis ikonok és mellé a számuk textbe
