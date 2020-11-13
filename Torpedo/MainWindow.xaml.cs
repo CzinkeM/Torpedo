@@ -19,21 +19,86 @@ namespace Torpedo
     {
         const int GameWidth = 10;
         const int GameHeight = 10;
+
+        int[,] tableLayout = new int[GameWidth, GameHeight];
+
         const string DIR_UP = "up";
         const string DIR_DOWN = "down";
         const string DIR_LEFT = "left";
         const string DIR_RIGHT = "right";
 
-        const int SHIP_DESTORYER = 3;
+        const string SHIP_SMALL = "smell_ship";
+        const string SHIP_DESTOYER = "destroyer";
+        const string SHIP_SUBMARINE = "submarine";
+        const string SHIP_CARRIER = "aircraft_carrier";
+        const string SHIP_BATTLESHIP = "battleship";
 
-        int[,] tableLayout = new int[GameWidth, GameHeight];
+        //Initiallize ship count depened on the game type
+        int SHIP_SMALL_count = 0;
+        int SHIP_DESTROYER_count = 0;
+        int SHIP_SUBMARINE_count = 0;
+        int SHIP_CARRIER_count = 0;
+        int SHIP_BATTLESHIP_count = 0;
+
+        const int SHIP_LENGTH_SMALL = 1;     
+        const int SHIP_LENGTH_DESTORYER = 2;     
+        const int SHIP_LENGTH_SUBMARINE = 3;     
+        const int SHIP_LENGTH_CARRIER = 3;     
+        const int SHIP_LENGTH_BATTLESHIP = 4;     
+        
 
         string actualDirection = DIR_UP;
+        string actualShipType = SHIP_SMALL;
+
+        string gameSize = "medium";
 
         public MainWindow()
         {
             InitializeComponent();
+            InitializeShipsCount();
+            InitializeRadioButtonContent();
         }
+        private void InitializeRadioButtonContent()
+        {
+            radioTypeSmall.Content = $"{SHIP_SMALL} ({SHIP_SMALL_count})";
+            radioTypeDestroyer.Content = $"{SHIP_DESTOYER} ({SHIP_DESTROYER_count})";
+            radioTypeSubmarine.Content = $"{SHIP_SUBMARINE} ({SHIP_SUBMARINE_count})";
+            radioTypeCarrier.Content = $"{SHIP_CARRIER} ({SHIP_CARRIER_count})";
+            radioTypeBattleShip.Content = $"{SHIP_BATTLESHIP} ({SHIP_BATTLESHIP_count})";
+        }
+
+        private void InitializeShipsCount()
+        {
+            if(!String.IsNullOrWhiteSpace(gameSize))
+            {
+                if (gameSize == "small")
+                {
+                    SHIP_SMALL_count = 1;
+                    SHIP_DESTROYER_count = 1;
+                    SHIP_CARRIER_count = 1;
+                    SHIP_SUBMARINE_count = 1;
+                    SHIP_BATTLESHIP_count = 1;
+                }
+                else if (gameSize == "medium")
+                {
+                    SHIP_SMALL_count = 2;
+                    SHIP_DESTROYER_count = 2;
+                    SHIP_CARRIER_count = 2;
+                    SHIP_SUBMARINE_count = 2;
+                    SHIP_BATTLESHIP_count = 2;
+                }
+                else if (gameSize == "Large")
+                {
+                    SHIP_SMALL_count = 3;
+                    SHIP_DESTROYER_count = 3;
+                    SHIP_CARRIER_count = 3;
+                    SHIP_SUBMARINE_count = 3;
+                    SHIP_BATTLESHIP_count = 3;
+                }
+                else throw new ArgumentException("Game Size not passed");
+            }
+        }
+
         private void DrawPoint(Vector position, Brush brush,string Id)
         {
             var shape = new Rectangle();
@@ -52,9 +117,50 @@ namespace Torpedo
 
         private void ClickOnCanvas(object sender, MouseButtonEventArgs e)
         {
-            PlaceShip(tableLayout, GetPoint(), SHIP_DESTORYER, actualDirection);
-            textTest1.Text = TwoDimensionalArrayToString(tableLayout);
-            DrawTheShips(tableLayout);
+            ChooseActiveShipType();
+            if (actualShipType == SHIP_SMALL && SHIP_SMALL_count > 0)
+            {
+                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_SMALL, actualDirection);
+                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
+                DrawTheShips(tableLayout, SHIP_SMALL, SHIP_SMALL_count);
+                SHIP_SMALL_count--;
+                radioTypeSmall.Content = $"{SHIP_SMALL} ({SHIP_SMALL_count})";
+            }
+            else if (actualShipType == SHIP_DESTOYER && SHIP_DESTROYER_count > 0)
+            {
+                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_DESTORYER, actualDirection);
+                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
+                DrawTheShips(tableLayout, SHIP_DESTOYER, SHIP_DESTROYER_count);
+                SHIP_DESTROYER_count--;
+                radioTypeDestroyer.Content = $"{SHIP_DESTOYER} ({SHIP_DESTROYER_count})";
+            }
+            else if (actualShipType == SHIP_SUBMARINE && SHIP_SUBMARINE_count > 0)
+            {
+                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_SUBMARINE, actualDirection);
+                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
+                DrawTheShips(tableLayout, SHIP_SUBMARINE, SHIP_SUBMARINE_count);
+                SHIP_SUBMARINE_count--;
+                radioTypeSubmarine.Content = $"{SHIP_SUBMARINE}({SHIP_SUBMARINE_count})";
+            }
+            else if (actualShipType == SHIP_CARRIER && SHIP_CARRIER_count > 0)
+            {
+                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_CARRIER, actualDirection);
+                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
+                DrawTheShips(tableLayout, SHIP_CARRIER, SHIP_CARRIER_count);
+                SHIP_CARRIER_count--;
+                radioTypeCarrier.Content = $"{SHIP_CARRIER}({SHIP_CARRIER_count})";
+            }
+            else if (actualShipType == SHIP_BATTLESHIP && SHIP_BATTLESHIP_count > 0)
+            {
+                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_BATTLESHIP, actualDirection);
+                textTest1.Text = TwoDimensionalArrayToString(tableLayout);
+                DrawTheShips(tableLayout, SHIP_BATTLESHIP, SHIP_BATTLESHIP_count);
+                SHIP_BATTLESHIP_count--;
+                radioTypeBattleShip.Content = $"{SHIP_BATTLESHIP} ({SHIP_BATTLESHIP_count})";
+            }
+            else ShowErrorMessage("There is no more ship");
+            
+            
         }
         private Vector GetPoint()
         {
@@ -90,15 +196,16 @@ namespace Torpedo
             }
             return ResultString;
         }
-        private void DrawTheShips(int[,] playgorund)
+        private void DrawTheShips(int[,] playgorund,string shipType,int shipCount)
         {
+            string id = shipType + "_" + shipCount;
             for (int i = 0; i < playgorund.GetLength(0); i++)
             {
                 for (int j= 0; j < playgorund.GetLength(1); j++)
                 {
                     if(playgorund[i,j] != 0)
                     {
-                        DrawPoint(new Vector(i, j), Brushes.Red,"id");
+                        DrawPoint(new Vector(i, j), Brushes.Red,id);
                     }
                 }
             }
@@ -107,7 +214,7 @@ namespace Torpedo
 
         private void ConfirmChoosing(object sender, RoutedEventArgs e)
         {
-
+            //Pass the tableLayout array to the next Window
         }
 
         private void PlaceShip(int[,] GameSpace,Vector startPosition,int lengthOfTheShip,string direction)
@@ -218,9 +325,9 @@ namespace Torpedo
             //mátrix módosítás -> ui frissítés
         }
 
-        private void ShowErrorMessage()
+        private void ShowErrorMessage(string ErrorMessage)
         {
-            throw new NotImplementedException();
+            textTest2.Text = ErrorMessage;
         }
 
         private void gameCanvas_KeyDown(object sender, KeyEventArgs e)
@@ -242,6 +349,37 @@ namespace Torpedo
                 actualDirection = DIR_RIGHT;
             }
             textTest2.Text = actualDirection;
+        }
+
+        private void ChooseActiveShipType()
+        {
+            if ((bool)radioTypeSmall.IsChecked)
+            {
+                actualShipType = SHIP_SMALL;
+            }
+            else if ((bool)radioTypeDestroyer.IsChecked)
+            {
+                actualShipType = SHIP_DESTOYER;
+            }
+            else if ((bool)radioTypeSubmarine.IsChecked)
+            {
+                actualShipType = SHIP_SUBMARINE;
+            }
+            else if ((bool)radioTypeCarrier.IsChecked)
+            {
+                actualShipType = SHIP_CARRIER;
+            } if ((bool)radioTypeBattleShip.IsChecked)
+            {
+                actualShipType = SHIP_BATTLESHIP;
+            }
+            else ShowErrorMessage("Choose ship type");
+        }
+
+        private void ClickClearButton(object sender, RoutedEventArgs e)
+        {
+            gameCanvas.Children.Clear();
+            InitializeShipsCount();
+            InitializeRadioButtonContent();
         }
         //Todo összes lerakott hajó törlése gomb
         //Todo Hajó számláló kis ikonok és mellé a számuk textbe

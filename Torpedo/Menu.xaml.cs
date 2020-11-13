@@ -36,7 +36,8 @@ namespace Torpedo
             {
                 PickTile.Show();
                 this.Close();
-                //TODO:Pass gametype
+                //TODO:Pass gametype (AI or Human)
+                //TODO:Pass  Game Size (Small, Medium, Large)
             }else
             {
                 labelError.Foreground = Brushes.Red;

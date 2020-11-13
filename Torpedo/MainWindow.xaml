@@ -9,6 +9,14 @@
     <StackPanel Background="Black">
         <TextBlock Text="Its a text" Background="Wheat" x:Name="textTest1"></TextBlock>
         <TextBlock Text="Coordinates" Background="Bisque" x:Name="textTest2"></TextBlock>
+        <StackPanel Orientation="Horizontal" Background="Wheat">
+            <RadioButton x:Name="radioTypeSmall" Content="Small Ship"/>
+            <RadioButton x:Name="radioTypeDestroyer" Content="Destroyer"/>
+            <RadioButton x:Name="radioTypeSubmarine" Content="Submarine"/>
+            <RadioButton x:Name="radioTypeCarrier" Content="Aircraft Carrier"/>
+            <RadioButton x:Name="radioTypeBattleShip" Content="Battleship"/>
+            <Button x:Name="buttonClear" Click="ClickClearButton" >Clear All</Button>
+        </StackPanel>
         <Canvas Width="400" Height="400" x:Name="gameCanvas" Background="White" KeyDown="gameCanvas_KeyDown" Focusable="True" Visibility="Visible" MouseLeftButtonDown="ClickOnCanvas" />
         <Button
             Margin="10"
