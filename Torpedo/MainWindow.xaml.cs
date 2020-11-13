@@ -20,15 +20,25 @@ namespace Torpedo
     /// </summary>
     public partial class MainWindow : Window
     {
-        const int GameWidth = 5;
-        const int GameHeight = 5;
+        const int GameWidth = 10;
+        const int GameHeight = 10;
+        const string DIR_UP = "up";
+        const string DIR_DOWN = "down";
+        const string DIR_LEFT = "left";
+        const string DIR_RIGHT = "right";
+
+        const int SHIP_DESTORYER = 3;
+        const int SHIP_BOAT = 1;
+
         int[,] tableLayout = new int[GameWidth, GameHeight];
         private int shipCount = 3;
+        private int differentShipCount = 1;
         
 
         public MainWindow()
         {
             InitializeComponent();
+            
         }
         private void DrawPoint(Vector position, Brush brush,string Id)
         {
@@ -39,21 +49,21 @@ namespace Torpedo
             shape.Width = unitX;
             shape.Height = unitY;
             shape.Stroke = Brushes.Black;
-            shape.StrokeThickness = 1.5;
+            shape.StrokeThickness = 1;
             shape.Uid = Id;
             Canvas.SetLeft(shape, position.X * unitX);
             Canvas.SetTop(shape, position.Y * unitY);
             gameCanvas.Children.Add(shape);
         }
 
-        private void GetPoint(object sender, MouseButtonEventArgs e)
+        private Vector GetPoint(object sender, MouseButtonEventArgs e)
         {
             var mousePosition = Mouse.GetPosition(gameCanvas);
             var mousePositionX = mousePosition.X;
             var mousePositionY = mousePosition.Y;
             var lowerLimitX = 0;
             var lowerLimitY = 0;
-            for (int i = 1; i < 5; i++)
+            for (int i = 1; i < GameWidth; i++)
             {
                 if (i*(gameCanvas.Width/GameWidth) < mousePositionX)
                 {
@@ -65,33 +75,7 @@ namespace Torpedo
                 }
             }
             var tileVector = new Vector(lowerLimitX, lowerLimitY);
-            var generatedId = lowerLimitX + "" + lowerLimitY;
-            textTest2.Text = "Cordinates: " + lowerLimitX + ":" + lowerLimitY + ", value:" + tableLayout[lowerLimitX, lowerLimitY].ToString();
-            if (tableLayout[lowerLimitX, lowerLimitY] != 1 && shipCount > 0)
-            {
-                tableLayout[lowerLimitX, lowerLimitY] = 1;
-                DrawPoint(tileVector, Brushes.Red,generatedId);
-                shipCount -= 1;
-            }
-            else if(tableLayout[lowerLimitX, lowerLimitY] != 0 && shipCount >= 0)
-            {
-                tableLayout[lowerLimitX, lowerLimitY] = 0;
-                gameCanvas.Children.Remove(FindUid(gameCanvas, generatedId));
-                shipCount +=1;
-            }
-            
-            textTest1.Text = shipCount.ToString();
-            textTest2.Text = generatedId;
-            
-            string cordinatesAsString = "";
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    cordinatesAsString += ","+tableLayout[i, j].ToString();
-                }
-            }
-            
+            return tileVector;
         }
         private static UIElement FindUid(DependencyObject parent, string uid)
         {
@@ -109,11 +93,108 @@ namespace Torpedo
             return null;
         }
 
-
         private void ConfirmChoosing(object sender, RoutedEventArgs e)
         {
             //Pass the matrix
             //OpenOtherWindows
         }
+
+        private int[,] PlaceShip(int[,] GameSpace,Vector startPosition,int lengthOfTheShip,string direction)
+        {
+            if(lengthOfTheShip <= 0) throw new ArgumentOutOfRangeException(lengthOfTheShip.ToString());
+            if (startPosition.X > GameSpace.GetLength(0)) throw new ArgumentOutOfRangeException(startPosition.X.ToString());
+            if (startPosition.Y > GameSpace.GetLength(1)) throw new ArgumentOutOfRangeException(startPosition.Y.ToString());
+            int X = Convert.ToInt16(startPosition.X);
+            int Y = Convert.ToInt16(startPosition.Y);
+            int[,] ModifiedMatrix = GameSpace;
+            switch(direction)
+            {
+                case DIR_UP:
+                    {
+                        for (int i = 0; i < lengthOfTheShip; i++)
+                        {
+                            if (ModifiedMatrix[X - i, Y] == 0)
+                            {
+                                ModifiedMatrix[X - i, Y] = lengthOfTheShip;
+                            }
+                            else
+                            {
+                                ShowErrorMessage();
+                                break;
+                            }
+
+                        }
+                        return ModifiedMatrix;
+                    }
+                case DIR_DOWN:
+                    {
+                        for (int i = 0; i < lengthOfTheShip; i++)
+                        {
+                            if (ModifiedMatrix[X + i, Y] == 0)
+                            {
+                                ModifiedMatrix[X + i, Y] = lengthOfTheShip;
+                            }
+                            else
+                            {
+                                ShowErrorMessage();
+                                break;
+                            }
+
+                        }
+                        return ModifiedMatrix;
+                    }
+                case DIR_LEFT:
+                    {
+                        for (int i = 0; i < lengthOfTheShip; i++)
+                        {
+                            if (ModifiedMatrix[X, Y-i] == 0)
+                            {
+                                ModifiedMatrix[X, Y-i] = lengthOfTheShip;
+                            }
+                            else
+                            {
+                                ShowErrorMessage();
+                                break;
+                            }
+
+                        }
+                        return ModifiedMatrix;
+                    }
+                case DIR_RIGHT:
+                    {
+                        for (int i = 0; i < lengthOfTheShip; i++)
+                        {
+                            if (ModifiedMatrix[X, Y+i] == 0)
+                            {
+                                ModifiedMatrix[X, Y+i] = lengthOfTheShip;
+                            }
+                            else
+                            {
+                                ShowErrorMessage();
+                                break;
+                            }
+
+                        }
+                        return ModifiedMatrix;
+                    }
+
+            }
+            return ModifiedMatrix;
+            //Egy x hosszú hajó lehelyezése a StartPosition pontra
+            //Megvizsgálja hogy a játéktérbe belefér-e a hajó(try-catch!?)
+            //Megvizsgálja hogy nincs-e valami az útjában(a mátrixban más-e az értéke mint 0)
+            //a hajó hosszának számával jelszi a hajó típusát a mátrixban(ha 4 hosszú akkor 4,4,4,4)
+            //Forral beilleszti az értékeket a kapott mátrixba és a módosítottat adja vissza
+            //Ezután rajzoljuk ki a canvasra, tehát a mátrixot, nem a ui-t manipuláljuk kézzel
+            //mátrix módosítás -> ui frissítés
+        }
+
+        private void ShowErrorMessage()
+        {
+            throw new NotImplementedException();
+        }
+        //Todo összes lerakott hajó törlése gomb
+        //Todo Hajó számláló kis ikonok és mellé a számuk textbe
+        //Helper icon amire felugró segítség ablak mit hogyan kell
     }
 }

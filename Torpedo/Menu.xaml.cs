@@ -44,5 +44,9 @@ namespace Torpedo
             }
 
         }
+        //Todo név megadási lehetőség
+        //Játék kiválasztása (kicsi, közepes, nagy) 5, 10 ,25 méretű pályák
+        //Szabályzat ismertetésére felugró ablak
+        //Kapcsolat icon ami githubra visz
     }
 }
