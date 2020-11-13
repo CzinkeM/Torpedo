@@ -117,30 +117,96 @@ namespace Torpedo
             if (startPosition.Y > GameSpace.GetLength(1)) throw new ArgumentOutOfRangeException(startPosition.Y.ToString());
             int X = Convert.ToInt16(startPosition.X);
             int Y = Convert.ToInt16(startPosition.Y);
+            
             if (direction == DIR_UP && !((Y - lengthOfTheShip+1) < 0))
             {
+                bool freeSpace = true;
                 for (int i = 0; i < lengthOfTheShip; i++)
                 {
-                    GameSpace[X, Y - i] = lengthOfTheShip;
+                    if (GameSpace[X, Y - i] == 0)
+                    {
+                        freeSpace = true;
+                    }
+                    else
+                    {
+                        freeSpace = false;
+                        break;
+                    }
+                }
+                if(freeSpace)
+                {
+                    for (int i = 0; i < lengthOfTheShip; i++)
+                    {
+                        GameSpace[X, Y - i] = lengthOfTheShip;
+                    }
                 }
             }else if(direction == DIR_DOWN && !((Y+lengthOfTheShip)>GameSpace.GetLength(1)))
             {
+                bool freeSpace = true;
                 for (int i = 0; i < lengthOfTheShip; i++)
                 {
-                    GameSpace[X, Y + i] = lengthOfTheShip;
+                    if (GameSpace[X, Y + i] == 0)
+                    {
+                        freeSpace = true;
+                    }
+                    else
+                    {
+                        freeSpace = false;
+                        break;
+                    }
                 }
+                if(freeSpace)
+                {
+                    for (int i = 0; i < lengthOfTheShip; i++)
+                    {
+                        GameSpace[X, Y + i] = lengthOfTheShip;
+                    }
+                }
+                
             }else if(direction == DIR_LEFT && !((X-lengthOfTheShip+1)<0))
             {
+                bool freeSpace = true;
                 for (int i = 0; i < lengthOfTheShip; i++)
                 {
-                    GameSpace[X -i, Y ] = lengthOfTheShip;
+                    if (GameSpace[X - i, Y] == 0)
+                    {
+                        freeSpace = true;
+                    }
+                    else
+                    {
+                        freeSpace = false;
+                        break;
+                    }
+                }
+                if (freeSpace)
+                {
+                    for (int i = 0; i < lengthOfTheShip; i++)
+                    {
+                        GameSpace[X-i, Y] = lengthOfTheShip;
+                    }
                 }
             }
             else if(direction == DIR_RIGHT && !((X+lengthOfTheShip)>GameSpace.GetLength(0)))
             {
+                bool freeSpace = true;
                 for (int i = 0; i < lengthOfTheShip; i++)
                 {
-                    GameSpace[X + i, Y] = lengthOfTheShip;
+                    if (GameSpace[X + i, Y] == 0)
+                    {
+                        freeSpace = true;
+                    }
+                    else
+                    {
+                        freeSpace = false;
+                        break;
+                    }
+                }
+                if (freeSpace)
+                {
+                    for (int i = 0; i < lengthOfTheShip; i++)
+                    {
+                        GameSpace[X + i, Y] = lengthOfTheShip;
+                    }
                 }
             }
             //Egy x hosszú hajó lehelyezése a StartPosition pontra
