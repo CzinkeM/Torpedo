@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Torpedo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="500" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="600" WindowStartupLocation="CenterScreen">
     <StackPanel Background="Black">
         <TextBlock Text="Its a text" Background="Wheat" x:Name="textTest1"></TextBlock>
         <TextBlock Text="Coordinates" Background="Bisque" x:Name="textTest2"></TextBlock>
-        <Canvas Width="400" Height="400" x:Name="gameCanvas" Background="White" MouseLeftButtonDown="GetPoint"/>
+        <Canvas Width="400" Height="400" x:Name="gameCanvas" Background="White" KeyDown="gameCanvas_KeyDown" MouseLeftButtonDown="ClickOnCanvas" />
         <Button
             Margin="10"
             Width="200"
