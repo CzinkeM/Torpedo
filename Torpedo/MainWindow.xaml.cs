@@ -65,6 +65,7 @@ namespace Torpedo
             radioTypeSubmarine.Content = $"{SHIP_SUBMARINE} ({SHIP_SUBMARINE_count})";
             radioTypeCarrier.Content = $"{SHIP_CARRIER} ({SHIP_CARRIER_count})";
             radioTypeBattleShip.Content = $"{SHIP_BATTLESHIP} ({SHIP_BATTLESHIP_count})";
+            radioTypeSmall.IsChecked = true;
         }
 
         private void InitializeShipsCount()
@@ -118,40 +119,106 @@ namespace Torpedo
         private void ClickOnCanvas(object sender, MouseButtonEventArgs e)
         {
             ChooseActiveShipType();
+            //SMALL
             if (actualShipType == SHIP_SMALL && SHIP_SMALL_count > 0)
             {
-                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_SMALL, actualDirection);
-                DrawTheShips(tableLayout, SHIP_SMALL, SHIP_SMALL_count);
-                SHIP_SMALL_count--;
-                radioTypeSmall.Content = $"{SHIP_SMALL} ({SHIP_SMALL_count})";
-            }
-            else if (actualShipType == SHIP_DESTOYER && SHIP_DESTROYER_count > 0)
+                int[,] previousTableState = tableLayout;
+                tableLayout = PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_SMALL, actualDirection);
+
+                if (tableLayout == null)
+                {
+
+                    ShowErrorMessage("Cannot place ship here");
+                    tableLayout = previousTableState;
+                }
+                else{
+                    DrawTheShips(tableLayout, SHIP_SMALL, SHIP_SMALL_count);
+                    SHIP_SMALL_count--;
+                    radioTypeSmall.Content = $"{SHIP_SMALL} ({SHIP_SMALL_count})";
+                    ShowErrorMessage("");
+                }
+                
+                //DESTROYER
+            }else if (actualShipType == SHIP_DESTOYER && SHIP_DESTROYER_count > 0)
             {
-                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_DESTORYER, actualDirection);
-                DrawTheShips(tableLayout, SHIP_DESTOYER, SHIP_DESTROYER_count);
-                SHIP_DESTROYER_count--;
-                radioTypeDestroyer.Content = $"{SHIP_DESTOYER} ({SHIP_DESTROYER_count})";
-            }
-            else if (actualShipType == SHIP_SUBMARINE && SHIP_SUBMARINE_count > 0)
+                int[,] previousTableState = tableLayout;
+                tableLayout = PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_DESTORYER, actualDirection);
+
+                if (tableLayout == null)
+                {
+
+                    ShowErrorMessage("Cannot place ship here");
+                    tableLayout = previousTableState;
+                }
+                else
+                {
+                    DrawTheShips(tableLayout, SHIP_DESTOYER, SHIP_DESTROYER_count);
+                    SHIP_DESTROYER_count--;
+                    radioTypeDestroyer.Content = $"{SHIP_DESTOYER} ({SHIP_DESTROYER_count})";
+                    ShowErrorMessage("");
+                }
+
+                //SUBMARINE
+            }else if (actualShipType == SHIP_SUBMARINE && SHIP_SUBMARINE_count > 0)
             {
-                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_SUBMARINE, actualDirection);
-                DrawTheShips(tableLayout, SHIP_SUBMARINE, SHIP_SUBMARINE_count);
-                SHIP_SUBMARINE_count--;
-                radioTypeSubmarine.Content = $"{SHIP_SUBMARINE}({SHIP_SUBMARINE_count})";
-            }
-            else if (actualShipType == SHIP_CARRIER && SHIP_CARRIER_count > 0)
+                int[,] previousTableState = tableLayout;
+                tableLayout = PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_SUBMARINE, actualDirection);
+
+                if (tableLayout == null)
+                {
+
+                    ShowErrorMessage("Cannot place ship here");
+                    tableLayout = previousTableState;
+                }
+                else
+                {
+                    DrawTheShips(tableLayout, SHIP_SUBMARINE, SHIP_SUBMARINE_count);
+                    SHIP_SUBMARINE_count--;
+                    radioTypeSubmarine.Content = $"{SHIP_SUBMARINE} ({SHIP_SUBMARINE_count})";
+                    ShowErrorMessage("");
+                }
+
+                //CARRIER
+            }else if (actualShipType == SHIP_CARRIER && SHIP_CARRIER_count > 0)
             {
-                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_CARRIER, actualDirection);
-                DrawTheShips(tableLayout, SHIP_CARRIER, SHIP_CARRIER_count);
-                SHIP_CARRIER_count--;
-                radioTypeCarrier.Content = $"{SHIP_CARRIER}({SHIP_CARRIER_count})";
-            }
-            else if (actualShipType == SHIP_BATTLESHIP && SHIP_BATTLESHIP_count > 0)
+                int[,] previousTableState = tableLayout;
+                tableLayout = PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_CARRIER, actualDirection);
+
+                if (tableLayout == null)
+                {
+
+                    ShowErrorMessage("Cannot place ship here");
+                    tableLayout = previousTableState;
+                }
+                else
+                {
+                    DrawTheShips(tableLayout, SHIP_CARRIER, SHIP_CARRIER_count);
+                    SHIP_CARRIER_count--;
+                    radioTypeCarrier.Content = $"{SHIP_CARRIER} ({SHIP_CARRIER_count})";
+                    ShowErrorMessage("");
+                }
+
+                //BATTLESHP
+            }else if (actualShipType == SHIP_BATTLESHIP && SHIP_BATTLESHIP_count > 0)
             {
-                PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_BATTLESHIP, actualDirection);
-                DrawTheShips(tableLayout, SHIP_BATTLESHIP, SHIP_BATTLESHIP_count);
-                SHIP_BATTLESHIP_count--;
-                radioTypeBattleShip.Content = $"{SHIP_BATTLESHIP} ({SHIP_BATTLESHIP_count})";
+                int[,] previousTableState = tableLayout;
+                tableLayout = PlaceShip(tableLayout, GetPoint(), SHIP_LENGTH_BATTLESHIP, actualDirection);
+
+                if (tableLayout == null)
+                {
+
+                    ShowErrorMessage("Cannot place ship here");
+                    tableLayout = previousTableState;
+                }
+                else
+                {
+                    DrawTheShips(tableLayout, SHIP_BATTLESHIP, SHIP_BATTLESHIP_count);
+                    SHIP_BATTLESHIP_count--;
+                    radioTypeBattleShip.Content = $"{SHIP_BATTLESHIP} ({SHIP_BATTLESHIP_count})";
+                    ShowErrorMessage("");
+                }
+
+
             }
             else ShowErrorMessage("There is no more ship");
             
@@ -209,115 +276,141 @@ namespace Torpedo
 
         private void ConfirmChoosing(object sender, RoutedEventArgs e)
         {
+            //TODO
             //Pass the tableLayout array to the next Window
         }
 
-        private void PlaceShip(int[,] GameSpace,Vector startPosition,int lengthOfTheShip,string direction)
+        private int[,] PlaceShip(int[,] GameSpace,Vector startPosition,int lengthOfTheShip,string direction)
         {
-            if(lengthOfTheShip <= 0) throw new ArgumentOutOfRangeException(lengthOfTheShip.ToString());
-            if (startPosition.X > GameSpace.GetLength(0)) throw new ArgumentOutOfRangeException(startPosition.X.ToString());
-            if (startPosition.Y > GameSpace.GetLength(1)) throw new ArgumentOutOfRangeException(startPosition.Y.ToString());
+            int[,] modifiedArray = new int[GameWidth, GameHeight];            
             int X = Convert.ToInt16(startPosition.X);
             int Y = Convert.ToInt16(startPosition.Y);
-            
-            if (direction == DIR_UP && !((Y - lengthOfTheShip+1) < 0))
+            if (direction == DIR_UP)
             {
-                bool freeSpace = true;
-                for (int i = 0; i < lengthOfTheShip; i++)
+                if(Y-(lengthOfTheShip-1)>= 0)
                 {
-                    if (GameSpace[X, Y - i] == 0)
+                    var freeSpaces = new List<bool>();
+                    for (int i = 0; i < lengthOfTheShip; i++)
                     {
-                        freeSpace = true;
+                        if(GameSpace[X,Y-i] == 0)
+                        {
+                            freeSpaces.Add(true);
+                        }
+                        else
+                        {
+                            freeSpaces.Add(false);
+                        }
+                    }
+                    if(freeSpaces.Contains(false))
+                    {
+                        modifiedArray = null;
                     }
                     else
                     {
-                        freeSpace = false;
-                        break;
-                    }
+                        for (int j = 0; j < lengthOfTheShip; j++)
+                        {
+                            GameSpace[X, Y-j] = lengthOfTheShip;                        
+                        }
+                        modifiedArray = GameSpace;
+                    }                    
                 }
-                if(freeSpace)
+                else modifiedArray = null;
+            }else if (direction == DIR_DOWN)
+            {
+                if (Y + (lengthOfTheShip - 1) <= GameSpace.GetLength(1)-1)
                 {
+                    var freeSpaces = new List<bool>();
                     for (int i = 0; i < lengthOfTheShip; i++)
                     {
-                        GameSpace[X, Y - i] = lengthOfTheShip;
+                        if (GameSpace[X, Y + i] == 0)
+                        {
+                            freeSpaces.Add(true);
+                        }
+                        else
+                        {
+                            freeSpaces.Add(false);
+                        }
                     }
-                }
-            }else if(direction == DIR_DOWN && !((Y+lengthOfTheShip)>GameSpace.GetLength(1)))
-            {
-                bool freeSpace = true;
-                for (int i = 0; i < lengthOfTheShip; i++)
-                {
-                    if (GameSpace[X, Y + i] == 0)
+                    if (freeSpaces.Contains(false))
                     {
-                        freeSpace = true;
+                        modifiedArray = null;
                     }
                     else
                     {
-                        freeSpace = false;
-                        break;
+                        for (int j = 0; j < lengthOfTheShip; j++)
+                        {
+                            GameSpace[X, Y + j] = lengthOfTheShip;
+                        }
+                        modifiedArray = GameSpace;
                     }
                 }
-                if(freeSpace)
+                else modifiedArray = null;
+            }else if (direction == DIR_LEFT)
+            {
+                if (X - (lengthOfTheShip - 1) >= 0)
                 {
+                    var freeSpaces = new List<bool>();
                     for (int i = 0; i < lengthOfTheShip; i++)
                     {
-                        GameSpace[X, Y + i] = lengthOfTheShip;
+                        if (GameSpace[X-i, Y] == 0)
+                        {
+                            freeSpaces.Add(true);
+                        }
+                        else
+                        {
+                            freeSpaces.Add(false);
+                        }
                     }
-                }
-                
-            }else if(direction == DIR_LEFT && !((X-lengthOfTheShip+1)<0))
-            {
-                bool freeSpace = true;
-                for (int i = 0; i < lengthOfTheShip; i++)
-                {
-                    if (GameSpace[X - i, Y] == 0)
+                    if (freeSpaces.Contains(false))
                     {
-                        freeSpace = true;
+                        modifiedArray = null;
                     }
                     else
                     {
-                        freeSpace = false;
-                        break;
+                        for (int j = 0; j < lengthOfTheShip; j++)
+                        {
+                            GameSpace[X -j,Y] = lengthOfTheShip;
+                        }
+                        modifiedArray = GameSpace;
                     }
                 }
-                if (freeSpace)
-                {
-                    for (int i = 0; i < lengthOfTheShip; i++)
-                    {
-                        GameSpace[X-i, Y] = lengthOfTheShip;
-                    }
-                }
+                else modifiedArray = null;
             }
-            else if(direction == DIR_RIGHT && !((X+lengthOfTheShip)>GameSpace.GetLength(0)))
+            else if (direction == DIR_RIGHT)
             {
-                bool freeSpace = true;
-                for (int i = 0; i < lengthOfTheShip; i++)
+                if (X + (lengthOfTheShip - 1) <= GameSpace.GetLength(0) -1)
                 {
-                    if (GameSpace[X + i, Y] == 0)
+                    var freeSpaces = new List<bool>();
+                    for (int i = 0; i < lengthOfTheShip; i++)
                     {
-                        freeSpace = true;
+                        if (GameSpace[X+i, Y ] == 0)
+                        {
+                            freeSpaces.Add(true);
+                        }
+                        else
+                        {
+                            freeSpaces.Add(false);
+                        }
+                    }
+                    if (freeSpaces.Contains(false))
+                    {
+                        modifiedArray = null;
                     }
                     else
                     {
-                        freeSpace = false;
-                        break;
+                        for (int j = 0; j < lengthOfTheShip; j++)
+                        {
+                            GameSpace[X+j, Y] = lengthOfTheShip;
+                        }
+                        modifiedArray = GameSpace;
                     }
                 }
-                if (freeSpace)
-                {
-                    for (int i = 0; i < lengthOfTheShip; i++)
-                    {
-                        GameSpace[X + i, Y] = lengthOfTheShip;
-                    }
-                }
+                else modifiedArray = null;
             }
-            //Egy x hosszú hajó lehelyezése a StartPosition pontra
-            //Megvizsgálja hogy a játéktérbe belefér-e a hajó(try-catch!?)
-            //Megvizsgálja hogy nincs-e valami az útjában(a mátrixban más-e az értéke mint 0)
-            //a hajó hosszának számával jelszi a hajó típusát a mátrixban(ha 4 hosszú akkor 4,4,4,4)
-            //Forral beilleszti az értékeket a kapott mátrixba és a módosítottat adja vissza
-            //Ezután rajzoljuk ki a canvasra, tehát a mátrixot, nem a ui-t manipuláljuk kézzel
-            //mátrix módosítás -> ui frissítés
+
+
+
+            return modifiedArray;
         }
 
         private void ShowErrorMessage(string ErrorMessage)
@@ -370,24 +463,18 @@ namespace Torpedo
             {
                 actualShipType = SHIP_BATTLESHIP;
             }
-            else ShowErrorMessage("Choose ship type");
         }
 
         private void ClickClearButton(object sender, RoutedEventArgs e)
         {
             gameCanvas.Children.Clear();
+            tableLayout = new int[GameHeight, GameWidth];
             InitializeShipsCount();
             InitializeRadioButtonContent();
         }
-
-        private void ClickInfoButton(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ClickInfoButton(object sender, MouseButtonEventArgs e)
         {
-
+            System.Windows.MessageBox.Show("Ez egy infós ablak");
         }
         //Todo összes lerakott hajó törlése gomb
         //Todo Hajó számláló kis ikonok és mellé a számuk textbe
