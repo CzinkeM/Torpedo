@@ -25,10 +25,10 @@ namespace Torpedo
         const string DIR_RIGHT = "right";
 
         const int SHIP_DESTORYER = 3;
-        const int SHIP_BOAT = 1;
 
         int[,] tableLayout = new int[GameWidth, GameHeight];
-        int counter = 0;
+
+        string actualDirection = DIR_UP;
 
         public MainWindow()
         {
@@ -52,7 +52,7 @@ namespace Torpedo
 
         private void ClickOnCanvas(object sender, MouseButtonEventArgs e)
         {
-            PlaceShip(tableLayout, GetPoint(), SHIP_DESTORYER, DIR_UP);
+            PlaceShip(tableLayout, GetPoint(), SHIP_DESTORYER, actualDirection);
             textTest1.Text = TwoDimensionalArrayToString(tableLayout);
             DrawTheShips(tableLayout);
         }
@@ -107,26 +107,6 @@ namespace Torpedo
 
         private void ConfirmChoosing(object sender, RoutedEventArgs e)
         {
-            counter++;
-            if(counter == 1)
-            {
-                textTest1.Text = DIR_UP;
-            }else if(counter == 2)
-            {
-                textTest1.Text = DIR_DOWN;
-            }
-            else if (counter == 3)
-            {
-                textTest1.Text = DIR_LEFT;
-            }
-            else if (counter == 4)
-            {
-                textTest1.Text = DIR_RIGHT;
-            }
-            else
-            {
-                counter = 0;
-            }
 
         }
 
@@ -143,11 +123,24 @@ namespace Torpedo
                 {
                     GameSpace[X, Y - i] = lengthOfTheShip;
                 }
-            }else if(direction == DIR_DOWN)
+            }else if(direction == DIR_DOWN && !((Y+lengthOfTheShip)>GameSpace.GetLength(1)))
             {
                 for (int i = 0; i < lengthOfTheShip; i++)
                 {
                     GameSpace[X, Y + i] = lengthOfTheShip;
+                }
+            }else if(direction == DIR_LEFT && !((X-lengthOfTheShip+1)<0))
+            {
+                for (int i = 0; i < lengthOfTheShip; i++)
+                {
+                    GameSpace[X -i, Y ] = lengthOfTheShip;
+                }
+            }
+            else if(direction == DIR_RIGHT && !((X+lengthOfTheShip)>GameSpace.GetLength(0)))
+            {
+                for (int i = 0; i < lengthOfTheShip; i++)
+                {
+                    GameSpace[X + i, Y] = lengthOfTheShip;
                 }
             }
             //Egy x hosszú hajó lehelyezése a StartPosition pontra
@@ -166,6 +159,23 @@ namespace Torpedo
 
         private void gameCanvas_KeyDown(object sender, KeyEventArgs e)
         {
+            if(e.Key == Key.Up)
+            {
+                actualDirection = DIR_UP;
+            }
+            if(e.Key == Key.Down)
+            {
+                actualDirection = DIR_DOWN;
+            }
+            if (e.Key == Key.Left)
+            {
+                actualDirection = DIR_LEFT;
+            }
+            if (e.Key == Key.Right)
+            {
+                actualDirection = DIR_RIGHT;
+            }
+            textTest2.Text = actualDirection;
         }
         //Todo összes lerakott hajó törlése gomb
         //Todo Hajó számláló kis ikonok és mellé a számuk textbe
