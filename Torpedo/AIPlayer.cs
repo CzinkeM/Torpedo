@@ -53,6 +53,11 @@ namespace TorpedoAI
         /*ValidateShot ellenorzi hogy az adott pozicioba lotunk e mar.*/
         public bool ValidateShot( int[] shot, ref List<int[]> prevShots)
         {
+            if((shot[0] < 0 && shot[0] > 9) 
+                || (shot[1] < 0 && shot[1] > 9))
+            {
+                return false;
+            }
             foreach (var coordinates in prevShots)
             {
                 if (coordinates[0] == shot[0]
