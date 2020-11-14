@@ -6,40 +6,52 @@ namespace TorpedoAI
 {
     class AIPlayer
     {
-        /*Ez az ai de a generalt lovest meg elenorizni kell ValidateShot mert generalhat ketszer ugyan olyat.*/
-        public int[] AIShoots(ref List<int[]> lastHit)
+        /*Ez az ai a generalt lepes valid lesz.*/
+        public int[] AIShoots(ref List<int[]> lastHit, ref List<int[]> prevShots)
         {
             int[] newShot;
 
-            if (lastHit.Count == 0)
+            do
             {
-                int y = new Random().Next(0, 10);
-                int x = new Random().Next(0, 10);
-                newShot = new int[2] { y, x };
-            }
-            else
-            {
-                int[] minusOrPlus = { -1, 1 };
-                int randomMinusOrPlus = minusOrPlus[new Random().Next(0, 2)];
-
-                if (new Random().Next(0, 2) == 0)
+                if (lastHit.Count == 0)
                 {
-                    int y = lastHit.Last()[0] + randomMinusOrPlus;
-                    int x = lastHit.Last()[1];
+                    int y = new Random().Next(0, 10);
+                    int x = new Random().Next(0, 10);
                     newShot = new int[2] { y, x };
                 }
                 else
                 {
-                    int y = lastHit.Last()[0];
-                    int x = lastHit.Last()[1] + randomMinusOrPlus;
-                    newShot = new int[2] { y, x };
+                    int[] minusOrPlus = { -1, 1 };
+                    int randomMinusOrPlus = minusOrPlus[new Random().Next(0, 2)];
+
+                    if (new Random().Next(0, 2) == 0)
+                    {
+                        int y = lastHit.Last()[0] + randomMinusOrPlus;
+                        int x = lastHit.Last()[1];
+                        newShot = new int[2] { y, x };
+                    }
+                    else
+                    {
+                        int y = lastHit.Last()[0];
+                        int x = lastHit.Last()[1] + randomMinusOrPlus;
+                        newShot = new int[2] { y, x };
+                    }
                 }
-            }         
+            } while (!ValidateShot(newShot, ref prevShots));
+
+            if (lastHit.Count != 0)
+            {
+                lastHit.Last()[2] = lastHit.Last()[2] - 1;
+                if (lastHit.Last()[2] == 0)
+                {
+                    lastHit.Remove(lastHit.Last());
+                }
+            }
             return newShot;
         }
 
         /*ValidateShot ellenorzi hogy az adott pozicioba lotunk e mar.*/
-        public bool ValidateShot( int[] shot, List<int[]> prevShots)
+        public bool ValidateShot( int[] shot, ref List<int[]> prevShots)
         {
             foreach (var coordinates in prevShots)
             {
@@ -49,6 +61,7 @@ namespace TorpedoAI
                     return false;
                 }
             }
+            prevShots.Add(shot);
             return true;
         }
         /*WasItAHit metodus visszaadja hogy volt e talalat vagy sem.*/
@@ -84,43 +97,32 @@ namespace TorpedoAI
         /*A round metodus csak ideiglenesen implementalja egy kornek a lefutasat*/
         //public void Round(List<Ship> ships, List<int[]> prevShots, List<int[]> lastHit)
         //{
-        //    int[] aishot = AIShoots(ref lastHit);
-
-        //    if (ValidateShot(aishot, prevShots))
+        //    int[] aishot = AIShoots(ref lastHit, ref prevShots);
+            
+        //    if (WasItAHit(ref ships, aishot))
         //    {
-        //        if (lastHit.Count != 0)
+        //        if (lastHit.Count == 0)
         //        {
-        //            lastHit.Last()[2] = lastHit.Last()[2] - 1;
-        //            if (lastHit.Last()[2] == 0)
-        //            {
-        //                lastHit.Remove(lastHit.Last());
-        //            }
-        //        }
-        //        if (WasItAHit(ref ships, aishot))
-        //        {
-        //            prevShots.Add(aishot);
-        //            if (lastHit.Count == 0)
-        //            {
-        //                lastHit.Add(new int[3] { aishot[0], aishot[1], 4 });
-        //            }
-        //            else
-        //            {
-        //                lastHit.Add(new int[3] { aishot[0], aishot[1], 3 });
-        //            }
-        //            if (Sinked(ref ships))
-        //            {
-        //                Console.WriteLine("Talált, süllyedt.");
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine("Talált.");
-        //            }
+        //            lastHit.Add(new int[3] { aishot[0], aishot[1], 4 });
         //        }
         //        else
         //        {
-        //            Console.WriteLine("Nem Talált.");
+        //            lastHit.Add(new int[3] { aishot[0], aishot[1], 3 });
+        //        }
+        //        if (Sinked(ref ships))
+        //        {
+        //            Console.WriteLine("Talált, süllyedt.");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Talált.");
         //        }
         //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Nem Talált.");
+        //    }
+
         //}
 
     }
