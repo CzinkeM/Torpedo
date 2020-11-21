@@ -12,11 +12,8 @@ using System.Windows.Shapes;
 
 namespace Torpedo
 {
-
     public partial class Menu : Window
     {
-        private const string TYPE_VS_AI = "ai";
-        private const string TYPE_PLAYER_VS_PLAYER = "player";
         private const string ERROR_MSG = "Please choose gametype";
         public Menu()
         {
