@@ -6,7 +6,61 @@ namespace TorpedoAI
 {
     class AIPlayer
     {
-        /*Ez az ai a generalt lepes valid lesz.*/
+        public List<Ship> AIPlaceShips()
+        {
+            List<Ship> ships = new List<Ship>() { new Ship(new int[5, 2], 5) ,
+                                                  new Ship(new int[4, 2], 4) ,
+                                                  new Ship(new int[3, 2], 3) ,
+                                                  new Ship(new int[3, 2], 3) ,
+                                                  new Ship(new int[2, 2], 2) };
+
+            foreach (Ship ship in ships)
+            {
+                do
+                {
+                    ship.Coordinates.SetValue(new Random().Next(0, 10), 0, 0);
+                    ship.Coordinates.SetValue(new Random().Next(0, 10), 0, 1);
+
+                } while (!(ship.Coordinates[0, 0] + ship.Size - 1 < 10
+                            || ship.Coordinates[0, 1] + ship.Size - 1 < 10));
+
+                if (ship.Coordinates[0, 0] + ship.Size - 1 < 10
+                    && ship.Coordinates[0, 1] + ship.Size - 1 < 10)
+                {
+                    if (new Random().Next(0, 2) == 0)
+                    {
+                        for (int i = 1; i < ship.Size; i++)
+                        {
+                            ship.Coordinates.SetValue(ship.Coordinates[0, 0], i, 0);
+                            ship.Coordinates.SetValue(ship.Coordinates[0, 1] + i, i, 1);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 1; i < ship.Size; i++)
+                        {
+                            ship.Coordinates.SetValue(ship.Coordinates[0, 0] + i, i, 0);
+                            ship.Coordinates.SetValue(ship.Coordinates[0, 1], i, 1);
+                        }
+                    }
+                }
+                else
+                {
+                    int[] anchorCoordinates = new int[2] { ship.Coordinates[0, 0], ship.Coordinates[0, 1] };
+                    int fixedCoordinateIndex = Array.IndexOf(anchorCoordinates, anchorCoordinates.Max());
+                    int newCoordinateIndex = Array.IndexOf(anchorCoordinates, anchorCoordinates.Min());
+
+                    for (int i = 1; i < ship.Size; i++)
+                    {
+                        ship.Coordinates.SetValue(ship.Coordinates[0, fixedCoordinateIndex], i, fixedCoordinateIndex);
+                        ship.Coordinates.SetValue(ship.Coordinates[0, newCoordinateIndex] + i, i, newCoordinateIndex);
+                    }
+                }
+            }
+            return ships;
+        }
+
+        /*Ez az ai, a generalt lepes valid lesz.*/
         public int[] AIShoots(ref List<int[]> lastHit, ref List<int[]> prevShots)
         {
             int[] newShot;
@@ -69,6 +123,7 @@ namespace TorpedoAI
             prevShots.Add(shot);
             return true;
         }
+
         /*WasItAHit metodus visszaadja hogy volt e talalat vagy sem.*/
         public bool WasItAHit(ref List<Ship> ships, int[] shot)
         {
@@ -85,6 +140,7 @@ namespace TorpedoAI
             }
             return false;
         }
+
         /*A Sinked methodus megvizsgalja hogy van e elsullyedt hajonk.*/
         public bool Sinked(ref List<Ship> ships)
         {
@@ -127,7 +183,6 @@ namespace TorpedoAI
         //    {
         //        Console.WriteLine("Nem Talált.");
         //    }
-
         //}
 
     }
