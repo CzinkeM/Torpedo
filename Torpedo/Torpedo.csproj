@@ -8,10 +8,24 @@
 
   <ItemGroup>
     <None Remove="battleship_logo.png" />
+    <None Remove="delete.png" />
+    <None Remove="info.png" />
+    <None Remove="ori_down.png" />
+    <None Remove="ori_left.png" />
+    <None Remove="ori_right.png" />
+    <None Remove="ori_up.png" />
+    <None Remove="process.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="battleship_logo.png" />
+    <Resource Include="delete.png" />
+    <Resource Include="info.png" />
+    <Resource Include="ori_down.png" />
+    <Resource Include="ori_left.png" />
+    <Resource Include="ori_right.png" />
+    <Resource Include="ori_up.png" />
+    <Resource Include="process.png" />
   </ItemGroup>
 
 </Project>

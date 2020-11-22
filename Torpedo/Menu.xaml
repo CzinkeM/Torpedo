@@ -5,25 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Torpedo"
         mc:Ignorable="d"
-        Title="Torpedó" Height="400" Width="400" WindowStartupLocation="CenterScreen">
+        Title="Torpedó" Width="500" Height="600" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="6*">
-            </ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="12*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Image Grid.Column="1" Grid.Row="1" Source="/battleship_logo.png"/>
-        <TextBlock Grid.Column="1" Grid.Row="2" TextAlignment="Center" FontSize="20" >Menü</TextBlock>
-        <Button Grid.Column="1" Grid.Row="6" FontSize="20" Name="buttonStartGame" Click="StartGame">Start Game</Button>
+        <TextBlock Grid.Column="1" Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center" FontSize="20" >Menü</TextBlock>
+        <Button Grid.Column="1" Grid.Row="7" FontSize="20" x:Name="buttonStartGame" Click="StartGame" HorizontalAlignment="Center">Start Game</Button>
+        <Label Grid.Column="1" Grid.Row="8" x:Name="labelError" HorizontalAlignment="Center" HorizontalContentAlignment="Center"></Label>
+        <Label Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center">Játékmód</Label>
+        <ListBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" BorderBrush="White" >
+            <RadioButton Content="VS Ai" x:Name="radioAi"/>
+            <RadioButton Content="VS Player" x:Name="radioPlayer"/>
+        </ListBox>
+        <Label Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center">Játék méret:</Label>
+        <ListBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" BorderBrush="White" >
+            <RadioButton Content="Kicsi" x:Name="radioSizeSmall"/>
+            <RadioButton Content="Közepes" x:Name="radioSizeMedium"/>
+            <RadioButton Content="Nagy" x:Name="radioSizeLarge"/>
+        </ListBox>
     </Grid>
 </Window>
