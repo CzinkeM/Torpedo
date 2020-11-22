@@ -79,7 +79,7 @@ namespace Torpedo
             if (allZero)
             {
                 Application.Current.Properties["second"] = _shipLayout;
-                Fight fight = new Fight(_gameWidth,_gameWidth,deployedShips);
+                Fight fight = new Fight(_gameWidth,_gameWidth,actualGameType);
                 fight.Show();
                 this.Close();
             }

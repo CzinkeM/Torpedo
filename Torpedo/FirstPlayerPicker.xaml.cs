@@ -83,6 +83,7 @@ namespace Torpedo
             else if (actualGameType == GameType.PlayerVsAi && allZero)
             {
                 Application.Current.Properties["player"] = _shipLayout;
+
             }
             else _error.ShowErrorMessage(Error.ERROR_SHIP_AVAILABLE);
             //TODO
