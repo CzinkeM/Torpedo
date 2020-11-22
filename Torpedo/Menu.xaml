@@ -27,8 +27,6 @@
         <TextBlock Grid.Column="1" Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center" FontSize="20" >Menü</TextBlock>
         <Button Grid.Column="1" Grid.Row="7" FontSize="20" x:Name="buttonStartGame" Click="StartGame" HorizontalAlignment="Center">Start Game</Button>
         <Label Grid.Column="1" Grid.Row="8" x:Name="labelError" HorizontalAlignment="Center" HorizontalContentAlignment="Center"></Label>
-
-
         <Label Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center">Játékmód</Label>
         <ListBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" BorderBrush="White" >
             <RadioButton Content="VS Ai" x:Name="radioAi"/>

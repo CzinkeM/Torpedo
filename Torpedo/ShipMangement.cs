@@ -7,12 +7,12 @@ using System.Windows.Media;
 
 namespace Torpedo
 {
-    enum GameType// Rename this
+    public enum GameType// Rename this
     {
         PlayerVsPlayer,
         PlayerVsAi
     }
-    enum GameSize
+    public enum GameSize
     {
         Small,
         Medium,
@@ -99,7 +99,7 @@ namespace Torpedo
                     }
                 case Direction.Down:
                     {
-                        if (startingPos.Y + (length - 1) <= modifiedArray.GetLength(1))
+                        if (startingPos.Y + (length - 1) <= modifiedArray.GetLength(1)-1)
                         {
                             List<bool> thereIsFreeSpace = new List<bool>();
                             for (int i = 0; i < length; i++)
@@ -173,7 +173,7 @@ namespace Torpedo
                     }
                 case Direction.Right:
                     {
-                        if (startingPos.X + (length - 1) <= gameTable.GetLength(0))
+                        if (startingPos.X + (length - 1) <= gameTable.GetLength(0)-1)
                         {
                             List<bool> thereIsFreeSpace = new List<bool>();
                             for (int i = 0; i < length; i++)
