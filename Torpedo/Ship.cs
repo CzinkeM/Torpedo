@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace Torpedo
 {
-    enum ShipName
+    public enum ShipName
     {
         Small,
         Destoyer,
@@ -17,7 +17,7 @@ namespace Torpedo
         Battleship
     }
     //Kezdő és végpont definiál egy hajót a mátrixban
-    class Ship
+    public class Ship
     {
 
         public Ship(Vector StartPosition,ShipName shipName)
