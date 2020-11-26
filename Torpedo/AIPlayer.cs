@@ -78,7 +78,7 @@ namespace Torpedo
                 {
                     int[] minusOrPlus = { -1, 1 };
                     int randomMinusOrPlus = minusOrPlus[new Random().Next(0, 2)];
-
+                    lastHit.Last()[2] = lastHit.Last()[2] - 1;
                     if (new Random().Next(0, 2) == 0)
                     {
                         int y = lastHit.Last()[0] + randomMinusOrPlus;
@@ -90,18 +90,14 @@ namespace Torpedo
                         int y = lastHit.Last()[0];
                         int x = lastHit.Last()[1] + randomMinusOrPlus;
                         newShot = new int[2] { y, x };
+                    }       
+                    if (lastHit.Last()[2] == 0)
+                    {
+                        lastHit.Remove(lastHit.Last());
                     }
                 }
             } while (!ValidateShot(newShot, ref prevShots));
-
-            if (lastHit.Count != 0)
-            {
-                lastHit.Last()[2] = lastHit.Last()[2] - 1;
-                if (lastHit.Last()[2] == 0)
-                {
-                    lastHit.Remove(lastHit.Last());
-                }
-            }
+   
             return newShot;
         }
 
