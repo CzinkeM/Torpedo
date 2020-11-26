@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TorpedoAI
+namespace Torpedo
 {
-    class Ship
+    public class Ship
     {
         public Ship(int[,] coordinates, int size)
         {

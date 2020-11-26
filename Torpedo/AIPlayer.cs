@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TorpedoAI
+namespace Torpedo
 {
-    class AIPlayer
+    public class AIPlayer
     {
+
         public List<Ship> AIPlaceShips()
         {
             List<Ship> ships = new List<Ship>() { new Ship(new int[5, 2], 5) ,
