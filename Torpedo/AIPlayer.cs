@@ -65,7 +65,7 @@ namespace Torpedo
         public int[] AIShoots(ref List<int[]> lastHit, ref List<int[]> prevShots)
         {
             int[] newShot;
-
+            List<int[]> list;
             do
             {
                 if (lastHit.Count == 0)
@@ -76,29 +76,54 @@ namespace Torpedo
                 }
                 else
                 {
-                    int[] minusOrPlus = { -1, 1 };
-                    int randomMinusOrPlus = minusOrPlus[new Random().Next(0, 2)];
-                    lastHit.Last()[2] = lastHit.Last()[2] - 1;
-                    if (new Random().Next(0, 2) == 0)
+                    do
                     {
-                        int y = lastHit.Last()[0] + randomMinusOrPlus;
-                        int x = lastHit.Last()[1];
-                        newShot = new int[2] { y, x };
-                    }
-                    else
-                    {
-                        int y = lastHit.Last()[0];
-                        int x = lastHit.Last()[1] + randomMinusOrPlus;
-                        newShot = new int[2] { y, x };
-                    }       
-                    if (lastHit.Last()[2] == 0)
-                    {
-                        lastHit.Remove(lastHit.Last());
-                    }
+                        list = PredictedShoots(lastHit[lastHit.Count - 1], prevShots) ;
+                        if (list.Count == 0)
+                        {
+                            lastHit.Remove(lastHit[lastHit.Count - 1]);
+
+                        }
+                    } while (list.Count == 0);
+
+                    int index = new Random().Next(list.Count);
+                    newShot = list[index];
+
                 }
             } while (!ValidateShot(newShot, ref prevShots));
    
             return newShot;
+        }
+
+        public List<int[]> PredictedShoots(int[] lastHit, List<int[]> prevShots)
+        {
+
+            List<int[]> predictedShoots = new List<int[]>() { new int[]{ lastHit[0] - 1, lastHit[1] },
+                                                             new int[]{ lastHit[0] + 1, lastHit[1] },
+                                                             new int[]{ lastHit[0], lastHit[1] - 1 },
+                                                             new int[]{ lastHit[0], lastHit[1] + 1 } };
+
+            List<int[]> validPredictedShoots = new List<int[]>() ;
+            bool notFound = true;
+            foreach (int[] item in predictedShoots)
+            {
+
+                foreach (int[] prevShot in prevShots)
+                {
+
+                    if ((item[0] == prevShot[0] && item[1] == prevShot[1])
+                        || ((item[0]<=0 || item[0]>=9) || (item[1] <= 0 || item[1] >= 9)))
+                    {
+                        notFound = false;
+                    }
+                }
+                if (notFound)
+                {
+                    validPredictedShoots.Add(item);
+                }
+                notFound = true;
+            }
+            return validPredictedShoots;
         }
 
         /*ValidateShot ellenorzi hogy az adott pozicioba lotunk e mar.*/
