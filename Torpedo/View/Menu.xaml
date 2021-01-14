@@ -1,0 +1,38 @@
+﻿<Window x:Class="Torpedo.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Torpedo"
+        mc:Ignorable="d"
+        Title="Torpedó" Width="500" Height="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="1.5*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1.2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image Source="/View/battleship_logo.png" Grid.Column="1" Grid.Row="1"></Image>
+        <Label Grid.Column="1" Grid.Row="2" FontSize="24" VerticalAlignment="Center" Margin="0,0,0,0" FontFamily="Bahnschrift" HorizontalAlignment="Center" >Menü</Label>
+        <Label Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Left" FontSize="20" FontFamily="Bahnschrift" HorizontalAlignment="Left" VerticalAlignment="Center">Játékmód</Label>
+        <ListBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" BorderBrush="White" >
+            <RadioButton Content="VS Ai" x:Name="radioAi" FontSize="20" FontFamily="Bahnschrift"/>
+            <RadioButton Content="VS Player" x:Name="radioPlayer" FontSize="20" FontFamily="Bahnschrift"/>
+        </ListBox>
+        <Label Grid.Column="1" Grid.Row="5" HorizontalContentAlignment="Center" FontSize="20" FontFamily="Bahnschrift" HorizontalAlignment="Left" VerticalAlignment="Center">Név:</Label>
+        <TextBox x:Name="inputName" Margin="50,0,0,0" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" FontFamily="Bahnschrift" FontSize="20"/>
+        <Button Grid.Column="1" Grid.Row="7" FontSize="24" x:Name="buttonStartGame" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF79B3DC" FontFamily="Bahnschrift" Margin="10,10,10,10" Click="clickStartButton">Start Game</Button>
+        <Label Grid.Column="1" Grid.Row="8" x:Name="labelError" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Background="Transparent" Foreground="Red"></Label>
+    </Grid>
+</Window>

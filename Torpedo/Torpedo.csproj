@@ -7,25 +7,34 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="battleship_logo.png" />
-    <None Remove="delete.png" />
-    <None Remove="info.png" />
-    <None Remove="ori_down.png" />
-    <None Remove="ori_left.png" />
-    <None Remove="ori_right.png" />
-    <None Remove="ori_up.png" />
-    <None Remove="process.png" />
+    <Resource Include="View\battleship_logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\ori_down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\ori_left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\ori_right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\ori_up.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\process.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="battleship_logo.png" />
-    <Resource Include="delete.png" />
-    <Resource Include="info.png" />
-    <Resource Include="ori_down.png" />
-    <Resource Include="ori_left.png" />
-    <Resource Include="ori_right.png" />
-    <Resource Include="ori_up.png" />
-    <Resource Include="process.png" />
+    <Folder Include="View\img\" />
   </ItemGroup>
 
 </Project>
