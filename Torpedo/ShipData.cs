@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Torpedo
 {
-    public class Ship
+    public class ShipData
     {
-        public Ship(int[,] coordinates, int size)
+        public ShipData(int[,] coordinates, int size)
         {
             Coordinates = coordinates;
             Size = size;

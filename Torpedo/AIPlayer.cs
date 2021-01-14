@@ -7,15 +7,15 @@ namespace Torpedo
     public class AIPlayer
     {
 
-        public List<Ship> AIPlaceShips()
+        public List<ShipData> AIPlaceShips()
         {
-            List<Ship> ships = new List<Ship>() { new Ship(new int[5, 2], 5) ,
-                                                  new Ship(new int[4, 2], 4) ,
-                                                  new Ship(new int[3, 2], 3) ,
-                                                  new Ship(new int[3, 2], 3) ,
-                                                  new Ship(new int[2, 2], 2) };
+            List<ShipData> ships = new List<ShipData>() { new ShipData(new int[5, 2], 5) ,
+                                                  new ShipData(new int[4, 2], 4) ,
+                                                  new ShipData(new int[3, 2], 3) ,
+                                                  new ShipData(new int[3, 2], 3) ,
+                                                  new ShipData(new int[2, 2], 2) };
 
-            foreach (Ship ship in ships)
+            foreach (ShipData ship in ships)
             {
                 do
                 {
@@ -147,9 +147,9 @@ namespace Torpedo
         }
 
         /*WasItAHit metodus visszaadja hogy volt e talalat vagy sem.*/
-        public bool WasItAHit(ref List<Ship> ships, int[] shot)
+        public bool WasItAHit(ref List<ShipData> ships, int[] shot)
         {
-            foreach (Ship ship in ships)
+            foreach (ShipData ship in ships)
             {
                 for (int i = 0; i < ship.Coordinates.Length/2; i++)
                 {
@@ -164,9 +164,9 @@ namespace Torpedo
         }
 
         /*A Sinked methodus megvizsgalja hogy van e elsullyedt hajonk.*/
-        public bool Sinked(ref List<Ship> ships)
+        public bool Sinked(ref List<ShipData> ships)
         {
-            foreach (Ship ship in ships)
+            foreach (ShipData ship in ships)
             {
                 if (ship.Size == 0)
                 {
