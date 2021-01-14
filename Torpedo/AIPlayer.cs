@@ -1,64 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace Torpedo
 {
     public class AIPlayer
     {
 
-        public List<ShipData> AIPlaceShips()
+        public int[,] AIPlaceShips()
         {
-            List<ShipData> ships = new List<ShipData>() { new ShipData(new int[5, 2], 5) ,
-                                                  new ShipData(new int[4, 2], 4) ,
-                                                  new ShipData(new int[3, 2], 3) ,
-                                                  new ShipData(new int[3, 2], 3) ,
-                                                  new ShipData(new int[2, 2], 2) };
 
-            foreach (ShipData ship in ships)
+            int[,] newAiShips = new int[10, 10];
+            int[] freeDirection = new int[2];
+
+
+            for (int i = 1; i <= 5; i++)
             {
+
+                Vector anchor;
+
                 do
                 {
-                    ship.Coordinates.SetValue(new Random().Next(0, 10), 0, 0);
-                    ship.Coordinates.SetValue(new Random().Next(0, 10), 0, 1);
+                    anchor = new Vector(new Random().Next(0, 10), new Random().Next(0, 10));
+                    for (int j = 1; j < i; j++)
+                    {
+                        if (newAiShips[Convert.ToInt32(anchor.X) + j, Convert.ToInt32(anchor.Y)] == 0)
+                        {
+                            freeDirection[0] = 1;
+                        }
+                        else if (newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y) + j] == 0)
+                        {
+                            freeDirection[1] = 1;
+                        }
+                        else
+                        {
+                            freeDirection = new int[2]{0, 0};
+                            break;
+                        }
+                        
+                    }
 
-                } while (!(ship.Coordinates[0, 0] + ship.Size - 1 < 10
-                            || ship.Coordinates[0, 1] + ship.Size - 1 < 10));
 
-                if (ship.Coordinates[0, 0] + ship.Size - 1 < 10
-                    && ship.Coordinates[0, 1] + ship.Size - 1 < 10)
+                } while (!(( anchor.X + (i - 1) < 10
+                            || anchor.Y + (i - 1) < 10)
+                            && (freeDirection[0] != 0 || freeDirection[1] != 0)));
+
+                if (freeDirection[0] != 0 && freeDirection[1] != 0)
                 {
                     if (new Random().Next(0, 2) == 0)
                     {
-                        for (int i = 1; i < ship.Size; i++)
+                        newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
+                        for (int j = 1; j < i; j++)
                         {
-                            ship.Coordinates.SetValue(ship.Coordinates[0, 0], i, 0);
-                            ship.Coordinates.SetValue(ship.Coordinates[0, 1] + i, i, 1);
+                            newAiShips[Convert.ToInt32(anchor.X) + j, Convert.ToInt32(anchor.Y)] = i;
                         }
                     }
                     else
                     {
-                        for (int i = 1; i < ship.Size; i++)
+                        newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
+                        for (int j = 1; j < i; j++)
                         {
-                            ship.Coordinates.SetValue(ship.Coordinates[0, 0] + i, i, 0);
-                            ship.Coordinates.SetValue(ship.Coordinates[0, 1], i, 1);
+                            newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y) + j] = i;
                         }
                     }
                 }
-                else
+                else if (freeDirection[0] != 0)
                 {
-                    int[] anchorCoordinates = new int[2] { ship.Coordinates[0, 0], ship.Coordinates[0, 1] };
-                    int fixedCoordinateIndex = Array.IndexOf(anchorCoordinates, anchorCoordinates.Max());
-                    int newCoordinateIndex = Array.IndexOf(anchorCoordinates, anchorCoordinates.Min());
-
-                    for (int i = 1; i < ship.Size; i++)
+                    newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
+                    for (int j = 1; j < i; j++)
                     {
-                        ship.Coordinates.SetValue(ship.Coordinates[0, fixedCoordinateIndex], i, fixedCoordinateIndex);
-                        ship.Coordinates.SetValue(ship.Coordinates[0, newCoordinateIndex] + i, i, newCoordinateIndex);
+                        newAiShips[Convert.ToInt32(anchor.X) + j, Convert.ToInt32(anchor.Y)] = i;
                     }
                 }
+                else if(freeDirection[1] != 0)
+                {
+                    newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
+                    for (int j = 1; j < i; j++)
+                    {
+                        newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y) + j] = i;
+                    }
+                }
+
             }
-            return ships;
+            return newAiShips;
         }
 
         /*Ez az ai, a generalt lepes valid lesz.*/
