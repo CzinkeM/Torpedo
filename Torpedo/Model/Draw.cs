@@ -10,20 +10,30 @@ namespace Torpedo
 {
     class Draw
     {
-        public void DrawPoint(Canvas canvas,int width,int height,Vector position, Brush brush, string Id)
+        private Canvas _canvas;
+        private int _width;
+        private int _height;
+
+        public Draw(Canvas canvas,int width, int height)
+        {
+            _canvas = canvas;
+            _width = width;
+            _height = height;
+        }
+        public void DrawPoint(Vector position, Brush brush, string id)
         {
             var shape = new Rectangle();
             shape.Fill = brush;
-            var unitX = canvas.Width / width;
-            var unitY = canvas.Height / height;
+            var unitX = _canvas.Width / _width;
+            var unitY = _canvas.Height / _height;
             shape.Width = unitX;
             shape.Height = unitY;
             shape.Stroke = Brushes.Black;
             shape.StrokeThickness = 1;
-            shape.Uid = Id;
+            shape.Uid = id;
             Canvas.SetLeft(shape, position.X * unitX);
             Canvas.SetTop(shape, position.Y * unitY);
-            canvas.Children.Add(shape);
+            _canvas.Children.Add(shape);
         }
     }
 }

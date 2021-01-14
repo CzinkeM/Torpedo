@@ -7,11 +7,6 @@ using System.Windows.Media;
 
 namespace Torpedo
 {
-    public enum GameType// Rename this
-    {
-        PlayerVsPlayer,
-        PlayerVsAi
-    }
     public enum GameSize
     {
         Small,
@@ -27,7 +22,7 @@ namespace Torpedo
     }
     class ShipMangement
     {
-        private Draw _draw = new Draw();
+        //private Draw _draw = new Draw();
         List<Ship> placedShips = new List<Ship>();
         public ShipMangement()
         {
@@ -50,6 +45,7 @@ namespace Torpedo
             }
             return shipCounts;
         }
+        /*
         public int[,] PlaceShipIntoMatrix(Canvas canvas,int[,] gameTable,Vector startingPos,Vector gameTableSize, int length, Direction dir, Label label)
         {
             int[,] modifiedArray = gameTable;
@@ -84,7 +80,7 @@ namespace Torpedo
                                 {
                                     modifiedArray[x, y - j] = length;
                                     Vector pos = new Vector(startingPos.X, startingPos.Y - j);
-                                    _draw.DrawPoint(canvas, gameWidth, gameHeight, pos, Brushes.Red, "id");
+                                    _draw.DrawPoint(canvas, gameWidth, gameHeight, pos, Brushes.Red, length.ToString());
                                 }
                                 label.Content = "Its ok";
                                 return modifiedArray;
@@ -211,6 +207,7 @@ namespace Torpedo
                 default: throw new Exception($"No direcetion specified ({dir})");
             }
         }
+        */
         public Vector GetPointOnCanvas(Canvas gameCanvas, int width, int height)
         {
             var mousePosition = Mouse.GetPosition(gameCanvas);
@@ -235,6 +232,7 @@ namespace Torpedo
             var tileVector = new Vector(lowerLimitX, lowerLimitY);
             return tileVector;
         }
+        /*
         public void DrawShipOnCanvas(Canvas gameCanvas, ref int[,] gameTable,ref int[] shipCounts,ref List<Ship> allShip,int width, int height, ShipName actualShipName,Direction dir,Label label)
         {
             Error error = new Error(label);
@@ -300,6 +298,7 @@ namespace Torpedo
             }
             else error.ShowErrorMessage(Error.ERROR_NO_MORE_SHIP);
         }
+        */
         public void DeleteAllShip(Canvas canvas,ref int[,] array,ref int[] arrayShipCounts,int width,int height,GameSize gameSize)
         {
             canvas.Children.Clear();

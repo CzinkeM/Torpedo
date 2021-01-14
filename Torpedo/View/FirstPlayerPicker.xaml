@@ -1,0 +1,57 @@
+﻿<Window x:Class="Torpedo.FirstPlayerPicker"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Torpedo"
+        mc:Ignorable="d"
+        Title="Első Játékos" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" KeyDown="gameCanvas_KeyDown">
+    <Window.Resources>
+        <BitmapImage x:Key="imgUp" UriSource="/View/ori_up.png" />
+        <BitmapImage x:Key="imgDown" UriSource="/View/ori_down.png" />
+        <BitmapImage x:Key="imgLeft" UriSource="/View/ori_left.png" />
+        <BitmapImage x:Key="imgRight" UriSource="/View/ori_right.png" />
+    </Window.Resources>
+    <StackPanel Name="mainStackPanel" Background="#FF5D5D5D">
+        <StackPanel Name="orientStackPanel" Orientation="Horizontal" HorizontalAlignment="Stretch" Background="AliceBlue">
+        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">A hajó orientációja:</Label>
+            <Border BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Center" Margin="80,5,0,5">
+                <Image x:Name="orientImage" Source="/View/ori_up.png" Width="100" Height="100" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </Border>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Background="CadetBlue">
+            <RadioButton x:Name="radioTypeSmall_1" Content="Small Ship" VerticalAlignment="Center" Margin="10,5,10,5"/>
+            <RadioButton x:Name="radioTypeDestroyer_1" Content="Destroyer" VerticalAlignment="Center"  Margin="10,5,10,5"/>
+            <RadioButton x:Name="radioTypeSubmarine_1" Content="Submarine" VerticalAlignment="Center"   Margin="10,5,10,5"/>
+            <RadioButton x:Name="radioTypeCarrier_1" Content="Aircraft Carrier" VerticalAlignment="Center" Margin="10,5,10,5"/>
+            <RadioButton x:Name="radioTypeBattleShip_1" Content="Battleship" VerticalAlignment="Center"  Margin="10,5,10,5"/>
+        </StackPanel>
+        <Canvas Width="400" Height="400" x:Name="gameCanvas_1" Background="White" KeyDown="gameCanvas_KeyDown" MouseRightButtonDown="gameCanvas_1_MouseRightButtonDown" Focusable="True" Visibility="Visible" MouseLeftButtonDown="ClickOnCanvas" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Width="Auto" Height="Auto" Margin="10" Padding="10" FontSize="20" Background="#9edaff" Click="ClickInfoButton"  >Help</Button>
+            
+            <Button
+                Background="#e19c9c"
+                Padding="10"
+                Margin="10"
+            Width="Auto "
+            Height="Auto"
+            FontSize="20"
+            x:Name="buttonClear_1" 
+            Click="ClickClearButton" VerticalAlignment="Center" HorizontalAlignment="Center"
+            >Clear</Button>
+            <Button
+                Padding="10"
+                Margin="10"
+            Width="Auto "
+            Height="Auto"
+            FontSize="20"
+            x:Name="buttonConfirm_1" 
+            Click="ConfirmChoosing" VerticalAlignment="Center" HorizontalAlignment="Center"
+            >Submit</Button>
+        </StackPanel>
+       
+        <Label x:Name="ErrorLabel_1" Background="#FFC7C7C7" HorizontalContentAlignment="Center">Have a good game! :)</Label>
+    </StackPanel>
+
+</Window>
