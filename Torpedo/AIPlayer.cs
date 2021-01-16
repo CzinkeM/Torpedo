@@ -127,7 +127,7 @@ namespace Torpedo
                             lastHit.Remove(lastHit[lastHit.Count - 1]);
                         }
                     } while (lastHit.Count != 0 && list.Count == 0);
-                    if (lastHit.Count == 0 && list.Count != 0)
+                    if (lastHit.Count == 0 && list.Count == 0)
                     {
                         int y = new Random().Next(0, 10);
                         int x = new Random().Next(0, 10);
@@ -200,67 +200,4 @@ namespace Torpedo
             prevShots.Add(shot);
             return true;
         }
-
-        /*WasItAHit metodus visszaadja hogy volt e talalat vagy sem.*/
-        public bool WasItAHit(ref List<ShipData> ships, int[] shot)
-        {
-            foreach (ShipData ship in ships)
-            {
-                for (int i = 0; i < ship.Coordinates.Length/2; i++)
-                {
-                    if (ship.Coordinates[i, 0] == shot[0] && ship.Coordinates[i, 1] == shot[1])
-                    {
-                        ship.Size -= 1; 
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        /*A Sinked methodus megvizsgalja hogy van e elsullyedt hajonk.*/
-        public bool Sinked(ref List<ShipData> ships)
-        {
-            foreach (ShipData ship in ships)
-            {
-                if (ship.Size == 0)
-                {
-                    ships.Remove(ship);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /*A round metodus csak ideiglenesen implementalja egy kornek a lefutasat*/
-        //public void Round(List<Ship> ships, List<int[]> prevShots, List<int[]> lastHit)
-        //{
-        //    int[] aishot = AIShoots(ref lastHit, ref prevShots);
-            
-        //    if (WasItAHit(ref ships, aishot))
-        //    {
-        //        if (lastHit.Count == 0)
-        //        {
-        //            lastHit.Add(new int[3] { aishot[0], aishot[1], 4 });
-        //        }
-        //        else
-        //        {
-        //            lastHit.Add(new int[3] { aishot[0], aishot[1], 3 });
-        //        }
-        //        if (Sinked(ref ships))
-        //        {
-        //            Console.WriteLine("Talált, süllyedt.");
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Talált.");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Nem Talált.");
-        //    }
-        //}
-
-    }
 }
