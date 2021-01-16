@@ -51,9 +51,9 @@ namespace Torpedo.ViewModel
             _width = width;
             _height = height;
             _firstPlayerRefShipMatrix = matrixTransformation(matrixTransformation((int[,]) Application.Current.Properties["1stPlayerArray"]));
-            //_secondPlayerRefShipmatrix = matrixTransformation(matrixTransformation((int[,])Application.Current.Properties["2ndPlayerArray"]));
-            _secondPlayerRefShipmatrix = matrixTransformation(_testArray);
-            originAiArray = matrixTransformation(_testArray);
+            _secondPlayerRefShipmatrix = matrixTransformation(matrixTransformation((int[,])Application.Current.Properties["2ndPlayerArray"]));
+            //_secondPlayerRefShipmatrix = matrixTransformation(_testArray);
+            originAiArray = matrixTransformation(matrixTransformation((int[,])Application.Current.Properties["2ndPlayerArray"]));
             _gameType =(GameType) Application.Current.Properties["gameType"];
         }
 

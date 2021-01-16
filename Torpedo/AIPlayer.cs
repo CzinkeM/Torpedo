@@ -62,7 +62,7 @@ namespace Torpedo
                 } while (!((anchor.X + (i - 1) < 10
                             || anchor.Y + (i - 1) < 10) && (freeDirection[0] == 1 || freeDirection[1] == 1)));
 
-                if (freeDirection[0] != 0 && freeDirection[1] != 0 && (anchor.X <= 9 || anchor.Y <= 9))
+                if (freeDirection[0] != 0 && freeDirection[1] != 0 )
                 {
                     if (new Random().Next(0, 2) == 0)
                     {
@@ -73,7 +73,6 @@ namespace Torpedo
                             {
                                 newAiShips[Convert.ToInt32(anchor.X) + j, Convert.ToInt32(anchor.Y)] = i;
                             }
-                            else i = 1;
                         }
                     }
                     else
@@ -85,11 +84,10 @@ namespace Torpedo
                             {
                                 newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y) + j] = i;
                             }
-                            else i = 1;
                         }
                     }
                 }
-                else if (freeDirection[0] != 0 && (anchor.X <= 9 || anchor.Y <= 9))
+                else if (freeDirection[0] != 0)
                 {
                     newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
                     for (int j = 1; j < i; j++)
@@ -97,16 +95,13 @@ namespace Torpedo
                         newAiShips[Convert.ToInt32(anchor.X) + j, Convert.ToInt32(anchor.Y)] = i;
                     }
                 }
-                else if (freeDirection[1] != 0 && (anchor.X <= 9 || anchor.Y <= 9))
+                else if (freeDirection[1] != 0)
                 {
                     newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
                     for (int j = 1; j < i; j++)
                     {
                         newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y) + j] = i;
                     }
-                }else if(anchor.X > 9 || anchor.Y > 9)
-                {
-                    i = 1;
                 }
 
             }

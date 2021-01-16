@@ -100,12 +100,14 @@ namespace Torpedo.View
                     _viewModel.guessTile(canvasSecondPlayer, ref aiPlayerShipLayout, ref shipCounts, ref _actualPlayer, _viewModel.GetPointOnCanvas(canvasSecondPlayer));
                     _viewModel.increaseRound();
                     textRound.Content = _viewModel.rounds;
-                    textPointSecondPlayer.Content = $"Pont: {_viewModel.pointSecondPlayer}";
+                    textPointFirstPlayer.Content = $"Pont: {_viewModel.pointFirstPlayer}";
                     textSecondPlayerShipCounts.Content = _viewModel.shipCountToString(_viewModel.secondPlayerShipsCounts);
                     _viewModel.endGame(_viewModel.secondPlayerShipsCounts, _actualPlayer, this);
                     int[] aiArray = aIPlayer.AIShoots(ref aiPrevHits, ref aiPrevShots);
                     Vector aiShot = new Vector(aiArray[0], aiArray[1]);
                     _viewModel.guessTile(canvasFirstPlayer, ref firstPlayerShipLayout, ref aiShipCounts, ref _actualPlayer, aiShot);
+                    textPointSecondPlayer.Content = $"Pont: {_viewModel.pointSecondPlayer}";
+                    _viewModel.endGame(_viewModel.firstPlayerShipsCounts, Player.AIPlayer, this);
                     //textRound.Content = _viewModel.rounds;
 
                 }
