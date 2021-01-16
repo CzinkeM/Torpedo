@@ -133,7 +133,6 @@ namespace Torpedo.ViewModel
                     }
                 default:
                     {
-                        rounds = 0;
                         return;
                     }
             }
