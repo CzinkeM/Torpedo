@@ -115,30 +115,38 @@ namespace Torpedo
             List<int[]> list;
             do
             {
-                if (lastHit.Count == 0)
+
+                if (lastHit.Count != 0)
+                {
+                    do
+                    {
+                        int[] lastInList = lastHit[lastHit.Count - 1];
+                        list = PredictedShoots(lastInList, prevShots);
+                        if (list.Count == 0)
+                        {
+                            lastHit.Remove(lastHit[lastHit.Count - 1]);
+                        }
+                    } while (lastHit.Count != 0 && list.Count == 0);
+                    if (lastHit.Count == 0 && list.Count != 0)
+                    {
+                        int y = new Random().Next(0, 10);
+                        int x = new Random().Next(0, 10);
+                        newShot = new int[2] { y, x };
+                    }
+                    else
+                    {
+                        int index = new Random().Next(list.Count);
+                        newShot = list[index];
+                    }
+                }
+                else
                 {
                     int y = new Random().Next(0, 10);
                     int x = new Random().Next(0, 10);
                     newShot = new int[2] { y, x };
                 }
-                else
-                {
-                    do
-                    {
-                        list = PredictedShoots(lastHit[lastHit.Count - 1], prevShots) ;
-                        if (list.Count == 0)
-                        {
-                            lastHit.Remove(lastHit[lastHit.Count - 1]);
-
-                        }
-                    } while (list.Count == 0);
-
-                    int index = new Random().Next(list.Count);
-                    newShot = list[index];
-
-                }
             } while (!ValidateShot(newShot, ref prevShots));
-   
+
             return newShot;
         }
 
