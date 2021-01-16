@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Torpedo.View"
         mc:Ignorable="d"
-        Title="Window1" SizeToContent="WidthAndHeight">
+        Title="Window1" SizeToContent="WidthAndHeight" KeyDown="hint" KeyUp="hideHint">
     <StackPanel Orientation="Horizontal" Background="#FF5D5D5D">
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Background="CadetBlue" Margin="0,0,10,0">

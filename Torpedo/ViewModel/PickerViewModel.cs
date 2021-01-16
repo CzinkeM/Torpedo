@@ -480,16 +480,14 @@ namespace Torpedo.ViewModel
             {
                 firstArrayFinal = shipMatrix;
                 Application.Current.Properties[prop_playerArray] = shipMatrix;
-                //Pass the generated ai shipLayout
+                AIPlayer aIPlayer = new AIPlayer();
+                int[,] aimatrix = aIPlayer.AIPlaceShips();
+                Application.Current.Properties[prop_2ndPlayerArray] = aimatrix;
                 Battle battleWindow = new Battle(_width, _height, firstArrayFinal, firstArrayFinal);
                 battleWindow.Show();
                 actualWindow.Close();
             }
             else _toShowMessage.Content = "There are more ship to place";
-            //guoard sentence
-            
-            
-            
         }
     }
 }

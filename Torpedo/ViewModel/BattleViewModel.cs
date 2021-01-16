@@ -14,15 +14,29 @@ namespace Torpedo.ViewModel
     public enum Player
     {
         FirstPlayer,
-        SecondPlayer
+        SecondPlayer,
+        AIPlayer
     }
     public class BattleViewModel
     {
-        Example example = new Example();
         private int _width;
         private int _height;
+        private GameType _gameType;
+        public int[,] originAiArray;
         public int[,] _firstPlayerRefShipMatrix;
         public int[,] _secondPlayerRefShipmatrix;
+        private int[,] _testArray = new int[,] {
+            {1,0,0,0,0,0,0,0,0,0 },
+            {0,2,0,0,0,0,0,0,0,0 },
+            {0,2,0,0,0,3,3,3,0,0 },
+            {0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,4,0,0,0 },
+            {0,0,0,0,0,0,4,0,0,0 },
+            {0,0,0,0,0,0,4,0,0,0 },
+            {0,0,0,0,0,0,4,0,0,0 },
+            {5,5,5,5,5,0,0,0,0,0 }
+        };
 
         public int pointFirstPlayer = 0;
         public int pointSecondPlayer = 0;
@@ -37,12 +51,16 @@ namespace Torpedo.ViewModel
             _width = width;
             _height = height;
             _firstPlayerRefShipMatrix = matrixTransformation(matrixTransformation((int[,]) Application.Current.Properties["1stPlayerArray"]));
-            _secondPlayerRefShipmatrix = matrixTransformation(matrixTransformation((int[,])Application.Current.Properties["2ndPlayerArray"]));
+            //_secondPlayerRefShipmatrix = matrixTransformation(matrixTransformation((int[,])Application.Current.Properties["2ndPlayerArray"]));
+            _secondPlayerRefShipmatrix = matrixTransformation(_testArray);
+            originAiArray = matrixTransformation(_testArray);
+            _gameType =(GameType) Application.Current.Properties["gameType"];
         }
-        public void guessTile(Canvas canvas, ref int[,] layout, ref int[] shipCounts,ref Player actualPlayer )
+
+        public void guessTile(Canvas canvas, ref int[,] layout, ref int[] shipCounts,ref Player actualPlayer,Vector hitCordinates )
         {
-            int x = Convert.ToInt32(GetPointOnCanvas(canvas).X);
-            int y = Convert.ToInt32(GetPointOnCanvas(canvas).Y);
+            int x = Convert.ToInt32(hitCordinates.X);
+            int y = Convert.ToInt32(hitCordinates.Y);
             Draw draw = new Draw(canvas, _width, _height);
             if (layout[x, y] != -1)
             {
@@ -51,24 +69,26 @@ namespace Torpedo.ViewModel
                 {
                     draw.DrawPoint(new Vector(x, y), Brushes.AliceBlue, "noHit");
                     layout[x, y] = -1;
-                    swapPlayer(ref actualPlayer);
+                    swapPlayer(ref actualPlayer, _gameType);
                 }
                 else //ha van hajó a tileon
                 {
                     draw.DrawPoint(new Vector(x, y), Brushes.Red, "hit");
                     int shipNumber = layout[x, y];
-                    layout[x, y] = -1;
+                    layout[x, y] = -2;
                     increasePoint(canvas);
                     decreaseShipCount(ref shipCounts, layout, shipNumber);
-                    swapPlayer(ref actualPlayer);
+                    swapPlayer(ref actualPlayer, _gameType);
                 }
-                rounds++;
             }
-
+        }
+        public void increaseRound()
+        {
+            rounds++;
         }
         public void endGame(int[] shipCounts,Player player, Window window)
         {
-            swapPlayer(ref player);
+            swapPlayer(ref player, _gameType);
             if(!shipCounts.Contains(1))
             {
                 window.Close();
@@ -77,13 +97,25 @@ namespace Torpedo.ViewModel
                 MessageBox.Show(winSentance);
             }
         }
-        private void swapPlayer(ref Player player)
+        private void swapPlayer(ref Player player, GameType gameType)
         {
-            if (player == Player.FirstPlayer)
+            if(gameType == GameType.Pvp)
             {
-                player = Player.SecondPlayer;
+                if (player == Player.FirstPlayer)
+                {
+                    player = Player.SecondPlayer;
+                }
+                else player = Player.FirstPlayer;
             }
-            else player = Player.FirstPlayer;
+            else
+            {
+                if (player == Player.FirstPlayer)
+                {
+                    player = Player.AIPlayer;
+                }
+                else player = Player.FirstPlayer;
+            }
+            
         }
         private void increasePoint(Canvas c)
         {
@@ -228,6 +260,46 @@ namespace Torpedo.ViewModel
             }
             var tileVector = new Vector(lowerLimitX, lowerLimitY);
             return tileVector;
+        }
+        public void showAiShips(int[,] array, Canvas canvas)
+        {
+            canvas.Children.Clear();
+            Draw draw = new Draw(canvas, array.GetLength(0), array.GetLength(0));
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(0); j++)
+                {
+                    Vector coordinate = new Vector(i, j);
+                    Brush brush;
+                    if (array[i, j] == 0) brush = Brushes.AliceBlue;
+                    else brush = Brushes.Red;
+                    draw.DrawPoint(coordinate, brush, "hint");
+                }
+            }
+        }
+        public void restoreCanvas(int[,] array, Canvas canvas)
+        {
+            canvas.Children.Clear();
+            Draw draw = new Draw(canvas, array.GetLength(0), array.GetLength(0));
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(0); j++)
+                {
+                    Vector coordinate = new Vector(i, j);
+                    Brush brush;
+                    if (array[i, j] == -2)
+                    {
+                        brush = Brushes.Red;
+                        draw.DrawPoint(coordinate, brush, "hint");
+                    }
+                    else if (array[i, j] == -1)
+                    {
+                        brush = Brushes.AliceBlue;
+                        draw.DrawPoint(coordinate, brush, "hint");
+                    }
+
+                }
+            }
         }
     }
 }
