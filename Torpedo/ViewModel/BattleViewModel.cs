@@ -88,6 +88,7 @@ namespace Torpedo.ViewModel
         }
         public void endGame(int[] shipCounts,Player player, Window window)
         {
+
             swapPlayer(ref player, _gameType);
             if(!shipCounts.Contains(1))
             {
