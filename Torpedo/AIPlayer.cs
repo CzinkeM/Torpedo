@@ -62,7 +62,7 @@ namespace Torpedo
                 } while (!((anchor.X + (i - 1) < 10
                             || anchor.Y + (i - 1) < 10) && (freeDirection[0] == 1 || freeDirection[1] == 1)));
 
-                if (freeDirection[0] != 0 && freeDirection[1] != 0 )
+                if (freeDirection[0] != 0 && freeDirection[1] != 0)
                 {
                     if (new Random().Next(0, 2) == 0)
                     {
@@ -158,7 +158,7 @@ namespace Torpedo
                                                              new int[]{ lastHit[0], lastHit[1] - 1 },
                                                              new int[]{ lastHit[0], lastHit[1] + 1 } };
 
-            List<int[]> validPredictedShoots = new List<int[]>() ;
+            List<int[]> validPredictedShoots = new List<int[]>();
             bool notFound = true;
             foreach (int[] item in predictedShoots)
             {
@@ -167,7 +167,7 @@ namespace Torpedo
                 {
 
                     if ((item[0] == prevShot[0] && item[1] == prevShot[1])
-                        || ((item[0]<=0 || item[0]>=9) || (item[1] <= 0 || item[1] >= 9)))
+                        || ((item[0] <= 0 || item[0] >= 9) || (item[1] <= 0 || item[1] >= 9)))
                     {
                         notFound = false;
                     }
@@ -182,9 +182,9 @@ namespace Torpedo
         }
 
         /*ValidateShot ellenorzi hogy az adott pozicioba lotunk e mar.*/
-        public bool ValidateShot( int[] shot, ref List<int[]> prevShots)
+        public bool ValidateShot(int[] shot, ref List<int[]> prevShots)
         {
-            if((shot[0] < 0 && shot[0] > 9) 
+            if ((shot[0] < 0 && shot[0] > 9)
                 || (shot[1] < 0 && shot[1] > 9))
             {
                 return false;
@@ -200,4 +200,5 @@ namespace Torpedo
             prevShots.Add(shot);
             return true;
         }
+    }
 }
