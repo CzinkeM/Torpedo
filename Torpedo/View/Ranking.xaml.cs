@@ -58,6 +58,12 @@ namespace Torpedo.View
             public int Loses { get;set; }
             public int Wins { get;set; }
         }
-        
+
+        private void clickBackButton(object sender, RoutedEventArgs e)
+        {
+            Menu menu = new Menu();
+            menu.Show();
+            this.Close();
+        }
     }
 }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Torpedo.View"
         mc:Ignorable="d"
         Title="Ranking" Width="500" Height="600" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <StackPanel>
+        
         <ListView Name="listRank">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -22,5 +23,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </Grid>
+        <Button Content="Back" Click="clickBackButton" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="24" Padding="20,5,20,5" Background="AliceBlue"></Button>
+    </StackPanel>
 </Window>

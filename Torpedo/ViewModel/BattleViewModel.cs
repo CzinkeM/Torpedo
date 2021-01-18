@@ -91,8 +91,7 @@ namespace Torpedo.ViewModel
             
             swapPlayer(ref player, _gameType);
             if(!shipCounts.Contains(1))
-            {
-                window.Close();
+            {                
                 string name = (string)Application.Current.Properties["playerName"];
                 string numberOfRounds = rounds.ToString();
                 string win;
@@ -104,6 +103,9 @@ namespace Torpedo.ViewModel
                 Result result = new Result(name, numberOfRounds, win);
                 DataHandling dataHandling = new DataHandling();
                 dataHandling.AddResultToJson(result);
+                Ranking ranking = new Ranking();
+                ranking.Show();
+                window.Close();
                 //Remove -> navigate to scoreboard
                 string winSentance = $"{player} is the winner";
                 MessageBox.Show(winSentance);
