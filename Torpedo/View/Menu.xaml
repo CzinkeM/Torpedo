@@ -22,6 +22,7 @@
             <RowDefinition Height="1.2*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <Image Source="/View/battleship_logo.png" Grid.Column="1" Grid.Row="1"></Image>
         <Label Grid.Column="1" Grid.Row="2" FontSize="24" VerticalAlignment="Center" Margin="0,0,0,0" FontFamily="Bahnschrift" HorizontalAlignment="Center" >Menü</Label>
@@ -34,5 +35,6 @@
         <TextBox x:Name="inputName" Margin="50,0,0,0" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" FontFamily="Bahnschrift" FontSize="20"/>
         <Button Grid.Column="1" Grid.Row="7" FontSize="24" x:Name="buttonStartGame" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF79B3DC" FontFamily="Bahnschrift" Margin="10,10,10,10" Click="clickStartButton">Start Game</Button>
         <Label Grid.Column="1" Grid.Row="8" x:Name="labelError" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Background="Transparent" Foreground="Red"></Label>
+        <Button Grid.Column="1" Grid.Row="9" FontSize="24" x:Name="buttonRankList" Content="Rank List" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Click="clickRankListButtin"></Button>
     </Grid>
 </Window>

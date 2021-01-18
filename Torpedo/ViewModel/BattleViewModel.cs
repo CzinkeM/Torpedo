@@ -88,11 +88,22 @@ namespace Torpedo.ViewModel
         }
         public void endGame(int[] shipCounts,Player player, Window window)
         {
-
+            
             swapPlayer(ref player, _gameType);
             if(!shipCounts.Contains(1))
             {
                 window.Close();
+                string name = (string)Application.Current.Properties["playerName"];
+                string numberOfRounds = rounds.ToString();
+                string win;
+                if (player == Player.FirstPlayer)
+                {
+                    win = "win";
+                }
+                else win = "defeat";
+                Result result = new Result(name, numberOfRounds, win);
+                DataHandling dataHandling = new DataHandling();
+                dataHandling.AddResultToJson(result);
                 //Remove -> navigate to scoreboard
                 string winSentance = $"{player} is the winner";
                 MessageBox.Show(winSentance);

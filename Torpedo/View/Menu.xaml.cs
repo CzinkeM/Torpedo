@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using Torpedo.View;
 using Torpedo.ViewModel;
 
 namespace Torpedo
@@ -10,8 +11,6 @@ namespace Torpedo
     public partial class Menu : Window
     {
         Error error;
-        int _colums;
-        int _rows;
         private MenuViewModel _viewModel;
         public Menu()
         {
@@ -24,6 +23,12 @@ namespace Torpedo
         {
             _viewModel.StartGame(inputName, radioAi, radioPlayer);
         }
-        //Kapcsolat icon ami githubra visz
+
+        private void clickRankListButtin(object sender, RoutedEventArgs e)
+        {
+            Ranking ranking = new Ranking();
+            ranking.Show();
+            this.Close();
+        }
     }
 }

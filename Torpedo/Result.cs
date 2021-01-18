@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Torpedo
 {
-    class Result
+   public class Result
     {
         public Result(string Name, string Rounds, string Result)
         {

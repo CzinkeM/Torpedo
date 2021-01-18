@@ -1,0 +1,26 @@
+﻿<Window x:Class="Torpedo.View.Ranking"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Torpedo.View"
+        mc:Ignorable="d"
+        Title="Ranking" Width="500" Height="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ListView Name="listRank">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock Text="Name: " />
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                        <TextBlock Text=" " />
+                        <TextBlock Text=" Wins: " />
+                        <TextBlock Text="{Binding Wins}" FontWeight="Bold" />
+                        <TextBlock Text=" Loses: " />
+                        <TextBlock Text="{Binding Loses}" FontWeight="Bold" />
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

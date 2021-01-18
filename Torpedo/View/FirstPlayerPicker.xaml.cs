@@ -18,7 +18,6 @@ namespace Torpedo
         private int _height;
         Dir _actualDirection;
         ShipType _actualShipType;
-        GameType _actualGameType;
         public FirstPlayerPicker(int width, int height)
         {
             InitializeComponent();
