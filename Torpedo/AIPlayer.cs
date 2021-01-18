@@ -11,50 +11,64 @@ namespace Torpedo
         public int[,] AIPlaceShips()
         {
 
-            int[,] newAiShips = new int[10, 10];
-            int[] freeDirection = new int[2];
-            List<bool> down = new List<bool>();
-            List<bool> right = new List<bool>();
+            int[,] newAiShips = new int[10, 10]{
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+
+            int[] freeDirection;
+
 
             for (int i = 1; i <= 5; i++)
             {
 
                 Vector anchor;
+               
 
                 do
                 {
+                    List<bool> down = new List<bool>();
+                    List<bool> right = new List<bool>();
 
+                    freeDirection = new int[2] { 0, 0 };
                     anchor = new Vector(new Random().Next(0, 10), new Random().Next(0, 10));
-                    for (int j = 1; j < i; j++)
+                    for (int j = 0; j < i; j++)
                     {
                         if (anchor.X + (i - 1) < 10 || anchor.Y + (i - 1) < 10)
                         {
                             if (anchor.X + (i - 1) < 10)//Lefele
                             {
-                                if (newAiShips[Convert.ToInt32(anchor.X) + (i - 1), Convert.ToInt32(anchor.Y)] == 0)
+                                if (newAiShips[Convert.ToInt32(anchor.X) + j, Convert.ToInt32(anchor.Y)] == 0)
                                 {
-                                    freeDirection[0] = 1;
                                     down.Add(true);
                                 }
                                 else down.Add(false);
                             }
                             if (anchor.Y + (i - 1) < 10)//Oldalara
                             {
-                                if (newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y) + (i - 1)] == 0)
+                                if (newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y) + j] == 0)
                                 {
-                                    freeDirection[1] = 1;
                                     right.Add(true);
                                 }
                                 else right.Add(false);
                             }
+
                         }
 
                     }
-                    if (!down.Contains(false))
+                    if (!down.Contains(false) && down.Count != 0)
                     {
                         freeDirection[0] = 1;
-                    }
-                    if (!right.Contains(false))
+                    }     
+                    
+                    if (!right.Contains(false) && right.Count != 0)
                     {
                         freeDirection[1] = 1;
                     }
@@ -62,12 +76,12 @@ namespace Torpedo
                 } while (!((anchor.X + (i - 1) < 10
                             || anchor.Y + (i - 1) < 10) && (freeDirection[0] == 1 || freeDirection[1] == 1)));
 
-                if (freeDirection[0] != 0 && freeDirection[1] != 0)
+                if (freeDirection[0] == 1 && freeDirection[1] == 1)
                 {
                     if (new Random().Next(0, 2) == 0)
                     {
-                        newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
-                        for (int j = 1; j < i; j++)
+                        
+                        for (int j = 0; j < i; j++)
                         {
                             if ((Convert.ToInt32(anchor.X) + j) < 10)
                             {
@@ -77,8 +91,8 @@ namespace Torpedo
                     }
                     else
                     {
-                        newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
-                        for (int j = 1; j < i; j++)
+                        
+                        for (int j = 0; j < i; j++)
                         {
                             if ((Convert.ToInt32(anchor.Y) + j) < 10)
                             {
@@ -87,18 +101,18 @@ namespace Torpedo
                         }
                     }
                 }
-                else if (freeDirection[0] != 0)
+                else if (freeDirection[0] == 1)
                 {
-                    newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
-                    for (int j = 1; j < i; j++)
+                   
+                    for (int j = 0; j < i; j++)
                     {
                         newAiShips[Convert.ToInt32(anchor.X) + j, Convert.ToInt32(anchor.Y)] = i;
                     }
                 }
-                else if (freeDirection[1] != 0)
+                else if (freeDirection[1] == 1)
                 {
-                    newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y)] = i;
-                    for (int j = 1; j < i; j++)
+                    
+                    for (int j = 0; j < i; j++)
                     {
                         newAiShips[Convert.ToInt32(anchor.X), Convert.ToInt32(anchor.Y) + j] = i;
                     }
